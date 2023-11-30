@@ -26,6 +26,37 @@ function RegisterDoctor() {
   const [center, setCenter] = useState("");
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
+  const [errorEmail, setErrorEmail] = useState(null);
+  const [errorUserName, setErrorUserName] = useState(null);
+  function isValidEmail(email) {
+    return /\S+@\S+\.\S+/.test(email);
+  }
+  function isValidUserName(userName) {
+    return /^[A-Za-z]+$/.test(userName);
+  }
+  const handleEmailChange = (event) => {
+    if (!isValidEmail(event.target.value)) 
+    { 
+      setErrorEmail('Email is invalid'); 
+    } 
+    else 
+    { 
+      setErrorEmail(null); 
+    } 
+    setEmail(event.target.value);
+  }
+
+  const handleUserNameChange = (event) => {
+    if (!isValidUserName(event.target.value)) 
+    { 
+      setErrorUserName('User Name is invalid'); 
+    } 
+    else 
+    { 
+      setErrorUserName(null); 
+    } 
+    setName(event.target.value);
+  }
 
   const handleRegister = async (e) => {
     const data = {
@@ -68,23 +99,25 @@ function RegisterDoctor() {
             noValidate
             sx={{ mt: 1 }}
           >
+            {errorEmail && <h5 style = {{color:'red'}}>{errorEmail}</h5>}
             <TextField
               margin="normal"
               required
               fullWidth
               id="email"
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={handleEmailChange}
               label="Email Address"
               name="email"
               autoComplete="email"
               autoFocus
             />
+             {errorUserName && <h5 style = {{color:'red'}}>{errorUserName}</h5>}
             <TextField
               margin="normal"
               required
               fullWidth
               id="name"
-              onChange={(e) => setName(e.target.value)}
+              onChange={handleUserNameChange}
               label="User name"
               name="name"
               autoComplete="name"

@@ -51,6 +51,7 @@ function DoctorHome() {
                 reason={app.reason}
                 docPhone={app.doctorPhone}
                 docName={app.userEmail}
+                id = {app.id}
                 startTime={new Date(app.startDateTime).toLocaleTimeString(
                   "en-US"
                 )}
@@ -63,7 +64,7 @@ function DoctorHome() {
   );
 }
 
-function AppointmentCard({ center, startTime, docName, reason }) {
+function AppointmentCard({ center, startTime, docName, reason, id }) {
   return (
     <Box sx={{ width: 275 }} display={"flex"} flexDirection={"column"}>
       <Card>

@@ -20,7 +20,23 @@ function Login() {
   const [email, setEmail] = useState();
   const [role, setRole] = useState("doctor");
   const [password, setPassword] = useState();
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
+
+  function isValidEmail(email) {
+    return /\S+@\S+\.\S+/.test(email);
+  }
+  const handleEmailChange = (event) => {
+    if (!isValidEmail(event.target.value)) 
+    { 
+      setError('Email is invalid'); 
+    } 
+    else 
+    { 
+      setError(null); 
+    } 
+    setEmail(event.target.value);
+  }
   const handleSubmit = async () => {
     const data = {
       userEmail: email,
@@ -72,11 +88,12 @@ function Login() {
               <option value="doctor">Doctor</option>
               <option value="user">Patient</option>
             </select>
+            {error && <h5 style = {{color:'red'}}>{error}</h5>}
             <TextField
               margin="normal"
               required
               fullWidth
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={handleEmailChange}
               id="email"
               label="Email Address"
               name="email"
@@ -106,13 +123,29 @@ function Login() {
             >
               Sign In
             </Button>
-            <Grid container>
+            {
+            role === "doctor" ? (
+              <Grid container>
+              <Grid item>
+                <Link href="/registerDoctor" variant="body2">
+                  {"Don't have an account? Sign Up"}
+                </Link>
+              </Grid>
+            </Grid>
+            ) : (
+            
+              <Grid container>
               <Grid item>
                 <Link href="/register" variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>
             </Grid>
+            )
+          }
+            
+            
+           
           </Box>
         </Box>
       </Container>

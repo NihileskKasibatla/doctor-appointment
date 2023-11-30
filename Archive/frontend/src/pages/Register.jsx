@@ -20,6 +20,53 @@ function Register() {
   const [password, setPassword] = useState("");
   const [phone, setPhone] = useState("");
   const navigate = useNavigate();
+  const [errorEmail, setErrorEmail] = useState(null);
+  const [errorUserName, setErrorUserName] = useState(null);
+  const [errorPhoneNumber, setErrorPhoneNumber] = useState(null);
+  function isValidEmail(email) {
+    return /\S+@\S+\.\S+/.test(email);
+  }
+  function isValidUserName(userName) {
+    return /^[A-Za-z]+$/.test(userName);
+  }
+  function isValidPhoneNumber(phoneNumber) {
+    return /^[0-9\b]+$/.test(phoneNumber);
+  }
+  const handleEmailChange = (event) => {
+    if (!isValidEmail(event.target.value)) 
+    { 
+      setErrorEmail('Email is invalid'); 
+    } 
+    else 
+    { 
+      setErrorEmail(null); 
+    } 
+    setEmail(event.target.value);
+  }
+
+  const handleUserNameChange = (event) => {
+    if (!isValidUserName(event.target.value)) 
+    { 
+      setErrorUserName('User Name is invalid'); 
+    } 
+    else 
+    { 
+      setErrorUserName(null); 
+    } 
+    setName(event.target.value);
+  }
+
+  const handlePhoneNumberChange = (event) => {
+    if (!isValidPhoneNumber(event.target.value)) 
+    { 
+      setErrorPhoneNumber('Phone Number is invalid'); 
+    } 
+    else 
+    { 
+      setErrorPhoneNumber(null); 
+    } 
+    setPhone(event.target.value);
+  }
 
   const handleRegister = async (e) => {
     const data = {
@@ -29,6 +76,7 @@ function Register() {
       userAddress: "",
       userPhoneNumber: phone,
     };
+
     console.log(data);
     const out = await axios.post("http://localhost:8081/api/v1/adduser", data);
     console.log(out);
@@ -58,39 +106,43 @@ function Register() {
             noValidate
             sx={{ mt: 1 }}
           >
+            {errorEmail && <h5 style = {{color:'red'}}>{errorEmail}</h5>}
             <TextField
               margin="normal"
               required
               fullWidth
               id="email"
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={handleEmailChange}
               label="Email Address"
               name="email"
               autoComplete="email"
               autoFocus
             />
+             {errorUserName && <h5 style = {{color:'red'}}>{errorUserName}</h5>}
             <TextField
               margin="normal"
               required
               fullWidth
               id="username"
-              onChange={(e) => setName(e.target.value)}
+              onChange={handleUserNameChange}
               label="User Name"
               name="name"
               autoComplete="name"
               autoFocus
             />
+            {errorPhoneNumber && <h5 style = {{color:'red'}}>{errorPhoneNumber}</h5>}
             <TextField
               margin="normal"
               required
               fullWidth
               id="phone"
-              onChange={(e) => setPhone(e.target.value)}
+              onChange={handlePhoneNumberChange}
               label="Phone Number"
               name="phone"
               autoComplete="phone"
               autoFocus
             />
+            
             <TextField
               margin="normal"
               required
@@ -114,12 +166,6 @@ function Register() {
               <Grid item>
                 <Link href="/" variant="body2">
                   {"Already Have an account ? Login !"}
-                </Link>
-              </Grid>
-              <br/>
-              <Grid item>
-                <Link href="/registerDoctor" variant="body2">
-                  {"Register as Doctor !"}
                 </Link>
               </Grid>
             </div>
