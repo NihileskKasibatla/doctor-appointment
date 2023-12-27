@@ -20,4 +20,6 @@ public class Doctor {
     public String availableStartTime;
     public String availableEndTime;
     public String password;
+    public int rating;
 }
+

@@ -20,6 +20,8 @@ public class Appointment {
     public String doctorEmail;
     public String startDateTime;
     public String endDateTime;
+    public String slot;
     public String reason;
     public String medicalCenter;
+    public String feedback;
 }

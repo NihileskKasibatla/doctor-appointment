@@ -76,10 +76,7 @@ function Register() {
       userAddress: "",
       userPhoneNumber: phone,
     };
-
-    console.log(data);
     const out = await axios.post("http://localhost:8081/api/v1/adduser", data);
-    console.log(out);
     navigate("/");
   };
 
