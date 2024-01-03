@@ -6,13 +6,17 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 
 import './Login.css';
-import DoctorLogo from '../../assets/Doctor-PNG-1.png'
+import doctorLogo from '../../assets/Doctor-PNG-1.png'
+import patientLogo from '../../assets/patient-2.png'
 
 const Home = () => {
   const [userType, setuserType] = useState(0);
+  const [logo, setLogo] = useState(doctorLogo);
 
   const handleChange = (event, newValue) => {
     setuserType(newValue);
+    if(newValue === 0) setLogo(doctorLogo);
+    else setLogo(patientLogo);
   };
 
   const a11yProps = (index) => {
@@ -25,7 +29,7 @@ const Home = () => {
   return (<div className='Login'>
 
     <form>
-      <img className='doctor-logo' src={DoctorLogo} alt='Doctor Logo' />
+      <img className='doctor-logo' src={logo} alt='Doctor Logo' />
       <Tabs
         value={userType}
         onChange={handleChange}
@@ -36,7 +40,7 @@ const Home = () => {
         <Tab label="Doctor"  {...a11yProps(0)} />
         <Tab label="Patient" {...a11yProps(1)} />
       </Tabs>
-      <label for="username">Username</label>
+      <label type="text" for="username">Username</label>
       <input type="text" placeholder="Email or Phone" id="username" />
       <label for="password">Password</label>
       <input type="password" placeholder="Password" id="password" />
