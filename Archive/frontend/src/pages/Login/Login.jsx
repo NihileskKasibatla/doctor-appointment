@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import {
   Link,
-  TextField
 } from "@mui/material";
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -13,11 +12,10 @@ import patientLogo from '../../assets/patient-2.png'
 const Home = () => {
   const [userType, setuserType] = useState(0);
   const [logo, setLogo] = useState(doctorLogo);
-  const [password, setPassword] = useState("");
 
   const handleChange = (event, newValue) => {
     setuserType(newValue);
-    if(newValue === 0) setLogo(doctorLogo);
+    if (newValue === 0) setLogo(doctorLogo);
     else setLogo(patientLogo);
   };
 

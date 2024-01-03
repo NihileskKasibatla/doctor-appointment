@@ -36,11 +36,6 @@ form * {
     border: none;
 }
 
-form h3 {
-    font-size: 32px;
-    line-height: 42px;
-    text-align: center;
-}
 
 label {
     display: block;
