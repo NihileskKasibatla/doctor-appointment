@@ -1,13 +1,13 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
-import DoctorDetails from "./pages/DoctorDetails";
-import DoctorHome from "./pages/DoctorHome";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import RegisterDoctor from "./pages/RegisterDoctor";
-import SelectDoctor from "./pages/SelectDoctor";
-import UserHome from "./pages/UserHome";
-import Home from "./pages/Home/Home";
+import DoctorDetails from "./DoctorDetails";
+import DoctorHome from "./DoctorHome";
+import Login from "./Login";
+import Register from "./Register";
+import RegisterDoctor from "./RegisterDoctor";
+import SelectDoctor from "./SelectDoctor";
+import UserHome from "./UserHome";
+import Home from "./Home/Home";
 
 const App = () => {
   return (
