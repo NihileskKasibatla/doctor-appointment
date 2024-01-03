@@ -18,7 +18,6 @@ import {
   DialogTitle,
   TextField,
   Rating,
-  Divider,
 } from "@mui/material";
 import { ArrowBack, CalendarMonth, StarRate } from "@mui/icons-material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
@@ -123,7 +122,7 @@ function UserHome() {
   };
 
   const submitFeedback = async () => {
-    const updateRating = await axios.post(
+    await axios.post(
       "http://localhost:8081/api/v1/updateRating",
       {
         email: selectedAppointment.doctorEmail,
@@ -131,7 +130,7 @@ function UserHome() {
       }
     );
 
-    const updateAppointmentWithFeedback = await axios.post(
+    await axios.post(
       "http://localhost:8081/api/v1/updateFeedback",
       {
         id: selectedAppointment.id,
@@ -237,6 +236,7 @@ function UserHome() {
                 docName={app.doctorName}
                 feedback={app.feedback}
                 startTime={dayjs(app.slot).format('DD MMM YYYY HH:mm')}
+                onFeedbackClick={() => handleFeedbackClick(app)}
               />
             ))}
           </Box>

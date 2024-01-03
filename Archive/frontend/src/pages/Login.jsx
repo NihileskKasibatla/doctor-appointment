@@ -2,7 +2,6 @@
 import {
   Button,
   Container,
-  Avatar,
   FormControlLabel,
   Grid,
   Link,
@@ -13,7 +12,7 @@ import {
   Stack,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import { LockOutlined, LocalHospital, Person } from "@mui/icons-material";
+import { LocalHospital, Person } from "@mui/icons-material";
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";

@@ -7,13 +7,15 @@ import Register from "./pages/Register";
 import RegisterDoctor from "./pages/RegisterDoctor";
 import SelectDoctor from "./pages/SelectDoctor";
 import UserHome from "./pages/UserHome";
+import Home from "./pages/Login/Home";
 
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Login />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/registerDoctor" element={<RegisterDoctor />} />
           <Route path="/selectDoctor" element={<SelectDoctor />} />

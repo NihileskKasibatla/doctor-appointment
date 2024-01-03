@@ -6,9 +6,7 @@ import {
   Typography,
   Menu,
   MenuItem,
-  Button,
   Card,
-  CardActions,
   CardContent,
 } from "@mui/material";
 import { Box } from "@mui/system";
@@ -83,7 +81,7 @@ function DoctorHome() {
 
       <Box sx={{ backgroundColor: "#f5f5f5", padding: "20px" }}>
         <Typography variant="h3" sx={{ marginBottom: "20px" }}>Appointments For You</Typography>
-        
+
         {/* Upcoming Appointments Section */}
         <Typography variant="h4" sx={{ marginBottom: "10px" }}>Upcoming Appointments</Typography>
         <Box
@@ -121,7 +119,7 @@ function DoctorHome() {
               reason={app.reason}
               docPhone={app.doctorPhone}
               docName={app.userEmail}
-              feedback = {app.feedback}
+              feedback={app.feedback}
               startTime={dayjs(app.slot).format('DD MMM YYYY HH:mm')}
             />
           ))}
