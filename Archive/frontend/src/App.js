@@ -7,9 +7,9 @@ import Register from "./pages/Register";
 import RegisterDoctor from "./pages/RegisterDoctor";
 import SelectDoctor from "./pages/SelectDoctor";
 import UserHome from "./pages/UserHome";
-import Home from "./pages/Login/Home";
+import Home from "./pages/Home/Home";
 
-function App() {
+const App = () => {
   return (
     <div className="App">
       <BrowserRouter>
