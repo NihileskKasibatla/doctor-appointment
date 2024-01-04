@@ -75,7 +75,7 @@ function Register() {
   };
 
   return (
-    <>
+    <div class="register-old">
       <Container component="main" maxWidth="xs">
         <Box
           sx={{
@@ -163,7 +163,7 @@ function Register() {
           </Box>
         </Box>
       </Container>
-    </>
+    </div>
   );
 }
 

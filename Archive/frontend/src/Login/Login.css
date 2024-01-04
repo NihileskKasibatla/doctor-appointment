@@ -5,17 +5,8 @@
     box-sizing: border-box;
 }
 
-.login-background {
-    width: 430px;
-    height: 520px;
-    position: absolute;
-    transform: translate(-50%, -50%);
-    left: 50%;
-    top: 50%;
-}
-
-form {
-    height: 545px;
+form#login-form {
+    height: 560px;
     width: 400px;
     background-color: rgba(255, 255, 255, 0.13);
     position: absolute;
@@ -29,7 +20,7 @@ form {
     padding: 50px 35px;
 }
 
-form * {
+form#login-form * {
     color: #ffffff;
     letter-spacing: 0.5px;
     outline: none;
@@ -37,13 +28,13 @@ form * {
 }
 
 
-label {
+#login-form label {
     display: block;
     margin-top: 30px;
     font-size: 16px;
 }
 
-input {
+#login-form input {
     display: block;
     height: 50px;
     width: 100%;
@@ -54,15 +45,15 @@ input {
     font-size: 14px;
 }
 
-input:focus {
+#login-form input:focus {
     border: 2px solid #319997;
 }
 
-::placeholder {
+#login-form ::placeholder {
     color: grey;
 }
 
-button.sign-in-btn {
+#login-form button.sign-in-btn {
     margin-top: 36px;
     width: 100%;
     background-color: #319997;
@@ -75,17 +66,17 @@ button.sign-in-btn {
     font-family: 'Poppins', sans-serif;
 }
 
-button.sign-in-btn:hover {
+#login-form button.sign-in-btn:hover {
     background-color: #000;
     color: #fff;
 }
 
-.MuiTabs-root.login-tabs .MuiButtonBase-root {
+#login-form .MuiTabs-root.login-tabs .MuiButtonBase-root {
     color: #fff;
     font-family: 'Poppins', sans-serif;
 }
 
-.login-background .shape {
+#login-form .login-background .shape {
     height: 200px;
     width: 200px;
     position: absolute;
@@ -98,17 +89,17 @@ button.sign-in-btn:hover {
     left: 120px;
 }
 
-.MuiTabs-root.login-tabs .MuiTabs-scroller.MuiTabs-fixed span.MuiTabs-indicator.css-1aquho2-MuiTabs-indicator {
+#login-form .MuiTabs-root.login-tabs .MuiTabs-scroller.MuiTabs-fixed span.MuiTabs-indicator.css-1aquho2-MuiTabs-indicator {
     background-color: #319997;
 }
 
-a.MuiTypography-root.MuiTypography-body2.MuiLink-root.MuiLink-underlineAlways.sign-up.css-101ca9i-MuiTypography-root-MuiLink-root {
+#login-form .sign-up {
     position: relative;
     top: 10px;
     color: #fff;
     text-decoration: underline;
 }
 
-a.MuiTypography-root.MuiTypography-body2.MuiLink-root.MuiLink-underlineAlways.sign-up.css-101ca9i-MuiTypography-root-MuiLink-root:hover {
+#login-form .sign-up:hover {
     color: orange;
 }

@@ -1,0 +1,115 @@
+.register {
+    width: 400px;
+    background-color: rgba(255, 255, 255, 0.13);
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
+    padding: 50px 58px 35px 46px;
+}
+
+.register-container.doctor .register {
+    top: 71%;
+}
+
+.register-container.doctor {
+    min-height: 79em;
+}
+
+.avatar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#register-form * {
+    color: #ffffff;
+    letter-spacing: 0.5px;
+    outline: none;
+    border: none;
+}
+
+#register-form .form-elements {
+    margin-top: -2em;
+}
+
+#register-form .MuiFormGroup-root  {
+    margin-top: 1.8em;
+    font-size: 16px;
+}
+
+#register-form input {
+    display: block;
+    height: 50px;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.07);
+    border-radius: 3px;
+    padding: 0 10px;
+    margin-top: 8px;
+    font-size: 14px;
+}
+
+#register-form input:focus {
+    border: 2px solid #319997;
+}
+
+#register-form ::placeholder {
+    color: grey;
+}
+
+#register-form ::placeholder {
+    color: grey;
+}
+
+#register-form button.register-btn {
+    margin-top: 36px;
+    width: 100%;
+    background-color: #319997;
+    color: #fff;
+    padding: 15px 0;
+    font-size: 18px;
+    border-radius: 5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+}
+
+#register-form button.register-btn:disabled {
+    background-color:grey;
+    cursor:unset
+}
+
+#register-form button.register-btn:hover:enabled {
+    background-color: #000;
+    color: #fff;
+}
+
+/* #register-form .available-time .MuiFormControlLabel-label{
+} */
+
+
+label.MuiFormControlLabel-root.MuiFormControlLabel-labelPlacementTop.available-time.css-1hpqosy-MuiFormControlLabel-root {
+    display: flex;
+    align-items: unset;
+    margin: unset;
+    font-family: unset;
+}
+
+.available-time span.MuiTypography-root.MuiTypography-body1.MuiFormControlLabel-label.css-ahj2mt-MuiTypography-root {
+    font-family: unset;
+}
+
+.available-start-time span.MuiTypography-root.MuiTypography-body1.MuiFormControlLabel-label.css-ahj2mt-MuiTypography-root {
+    font-family: unset;
+}
+
+
+label.MuiFormControlLabel-root.MuiFormControlLabel-labelPlacementTop.available-start-time.css-1hpqosy-MuiFormControlLabel-root {
+    display: flex;
+    align-items: unset;
+    margin: unset;
+}

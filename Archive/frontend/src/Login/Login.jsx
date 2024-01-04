@@ -1,22 +1,30 @@
-import { useState } from 'react';
-import {
-  Link,
-} from "@mui/material";
+import { useContext, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 
-import './Login.css';
 import doctorLogo from '../assets/Doctor-PNG-1.png'
 import patientLogo from '../assets/patient-2.png'
 
+import './Login.css';
+import AppContext from '../store/store';
+
 const Home = () => {
-  const [userType, setuserType] = useState(0);
+  const {accountType, setAccountType} = useContext(AppContext);
   const [logo, setLogo] = useState(doctorLogo);
 
-  const handleChange = (event, newValue) => {
-    setuserType(newValue);
-    if (newValue === 0) setLogo(doctorLogo);
-    else setLogo(patientLogo);
+  useEffect(() => {
+    setAccountType(accountType);
+  }, [accountType]);
+
+  const handleChange = (event, userVal) => {
+    if (userVal === 0) {
+      setLogo(doctorLogo);
+    }
+    else {
+      setLogo(patientLogo);
+    }
+    setAccountType(userVal);
   };
 
   const a11yProps = (index) => {
@@ -26,12 +34,11 @@ const Home = () => {
     };
   }
 
-  return (<div className='Login'>
-
-    <form>
+  return (<div className='login'>
+    <form id="login-form">
       <img className='doctor-logo' src={logo} alt='Doctor Logo' />
       <Tabs
-        value={userType}
+        value={accountType}
         onChange={handleChange}
         aria-label="secondary tabs example"
         className='login-tabs'
@@ -40,12 +47,12 @@ const Home = () => {
         <Tab label="Doctor"  {...a11yProps(0)} />
         <Tab label="Patient" {...a11yProps(1)} />
       </Tabs>
-      <label type="text" for="username">Username</label>
+      <label type="text" htmlFor="username">Username</label>
       <input type="text" placeholder="Email or Phone" id="username" />
-      <label for="password">Password</label>
+      <label htmlFor="password">Password</label>
       <input type="password" placeholder="Password" id="password" />
       <button className='sign-in-btn'>Sign In</button>
-      <Link className='sign-up' href="/registerDoctor" variant="body2">
+      <Link className='sign-up'  to='/register'>
         {"Don't have an account? Sign Up"}
       </Link>
     </form>
