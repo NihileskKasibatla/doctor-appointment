@@ -6,8 +6,8 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 
 import './Login.css';
-import doctorLogo from '../../assets/Doctor-PNG-1.png'
-import patientLogo from '../../assets/patient-2.png'
+import doctorLogo from '../assets/Doctor-PNG-1.png'
+import patientLogo from '../assets/patient-2.png'
 
 const Home = () => {
   const [userType, setuserType] = useState(0);
