@@ -93,23 +93,16 @@ function SelectDoctor() {
     setModalOpen(true);
     getBookedAppointments(_docEmail);
   };
-
+  
   const calculateAvailableSlots = (tmpSelectedDate) => {
     const slotDuration = 30; // in minutes
     const bookedSlots = bookedAppointments.map(
       (appointment) => appointment.slot
     );
-    const currentDateTime = dayjs();
-    const selectedDateTime = dayjs(tmpSelectedDate);
-
-    let allSlots = generateAllSlots(slotDuration);
-    if (selectedDateTime.isSame(currentDateTime, 'day')) {
-      const currentHourMinute = currentDateTime.format('HH:mm');
-      allSlots = allSlots.filter(slot => slot > currentHourMinute);
-    }
-
-    const dateFormatted = selectedDateTime.format().split("T")[0];
-    const availableSlots = allSlots.filter(slot => {
+    const dateFormatted = tmpSelectedDate.format().split("T")[0];
+    const allSlots = generateAllSlots(slotDuration);
+    var availableSlots = [];
+    availableSlots = allSlots.filter(slot => {
       const slotDateTime = `${dateFormatted} ${slot}`;
       return !bookedSlots.includes(slotDateTime);
     });
@@ -117,12 +110,11 @@ function SelectDoctor() {
     setAvailableSlots(availableSlots);
   };
 
-
   const generateAllSlots = (duration) => {
     var allSlots = [];
     let currentTime = docStartTime;
     while (currentTime <= docEndTime) {
-      if (currentTime !== "12:30" && currentTime !== "13:00") {
+      if(currentTime!=="12:30" && currentTime!=="13:00") {
         allSlots.push(currentTime);
       }
 
@@ -132,7 +124,7 @@ function SelectDoctor() {
       const newHours = Math.floor(newMinutes / 60);
       const formattedHours = newHours < 10 ? `0${newHours}` : `${newHours}`;
       const formattedMinutes = (newMinutes % 60) < 10 ? `0${newMinutes % 60}` : `${newMinutes % 60}`;
-
+      
       currentTime = `${formattedHours}:${formattedMinutes}`;
     }
     return allSlots;
@@ -167,7 +159,7 @@ function SelectDoctor() {
       reason,
       medicalCenter: center,
     };
-    await axios.post(
+    const out = await axios.post(
       "http://localhost:8081/api/v1/addAppointment",
       data
     );

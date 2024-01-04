@@ -14,7 +14,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 function Register() {
-  const handleSubmit = () => { };
+  const handleSubmit = () => {};
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
@@ -33,32 +33,38 @@ function Register() {
     return /^[0-9\b]+$/.test(phoneNumber);
   }
   const handleEmailChange = (event) => {
-    if (!isValidEmail(event.target.value)) {
-      setErrorEmail('Email is invalid');
-    }
-    else {
-      setErrorEmail(null);
-    }
+    if (!isValidEmail(event.target.value)) 
+    { 
+      setErrorEmail('Email is invalid'); 
+    } 
+    else 
+    { 
+      setErrorEmail(null); 
+    } 
     setEmail(event.target.value);
   }
 
   const handleUserNameChange = (event) => {
-    if (!isValidUserName(event.target.value)) {
-      setErrorUserName('User Name is invalid');
-    }
-    else {
-      setErrorUserName(null);
-    }
+    if (!isValidUserName(event.target.value)) 
+    { 
+      setErrorUserName('User Name is invalid'); 
+    } 
+    else 
+    { 
+      setErrorUserName(null); 
+    } 
     setName(event.target.value);
   }
 
   const handlePhoneNumberChange = (event) => {
-    if (!isValidPhoneNumber(event.target.value)) {
-      setErrorPhoneNumber('Phone Number is invalid');
-    }
-    else {
-      setErrorPhoneNumber(null);
-    }
+    if (!isValidPhoneNumber(event.target.value)) 
+    { 
+      setErrorPhoneNumber('Phone Number is invalid'); 
+    } 
+    else 
+    { 
+      setErrorPhoneNumber(null); 
+    } 
     setPhone(event.target.value);
   }
 
@@ -70,7 +76,7 @@ function Register() {
       userAddress: "",
       userPhoneNumber: phone,
     };
-    await axios.post("http://localhost:8081/api/v1/adduser", data);
+    const out = await axios.post("http://localhost:8081/api/v1/adduser", data);
     navigate("/");
   };
 
@@ -97,7 +103,7 @@ function Register() {
             noValidate
             sx={{ mt: 1 }}
           >
-            {errorEmail && <h5 style={{ color: 'red' }}>{errorEmail}</h5>}
+            {errorEmail && <h5 style = {{color:'red'}}>{errorEmail}</h5>}
             <TextField
               margin="normal"
               required
@@ -109,7 +115,7 @@ function Register() {
               autoComplete="email"
               autoFocus
             />
-            {errorUserName && <h5 style={{ color: 'red' }}>{errorUserName}</h5>}
+             {errorUserName && <h5 style = {{color:'red'}}>{errorUserName}</h5>}
             <TextField
               margin="normal"
               required
@@ -121,7 +127,7 @@ function Register() {
               autoComplete="name"
               autoFocus
             />
-            {errorPhoneNumber && <h5 style={{ color: 'red' }}>{errorPhoneNumber}</h5>}
+            {errorPhoneNumber && <h5 style = {{color:'red'}}>{errorPhoneNumber}</h5>}
             <TextField
               margin="normal"
               required
@@ -133,7 +139,7 @@ function Register() {
               autoComplete="phone"
               autoFocus
             />
-
+            
             <TextField
               margin="normal"
               required
