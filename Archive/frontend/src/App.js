@@ -20,7 +20,7 @@ import { useState } from 'react';
 
 
 const App = () => {
-  const [accountType, setAccountType] = useState(1);
+  const [accountType, setAccountType] = useState(0);
 
   return (
     <AppContext.Provider value={{accountType, setAccountType}}>
