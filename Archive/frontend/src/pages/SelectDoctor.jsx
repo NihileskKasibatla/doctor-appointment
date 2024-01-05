@@ -55,9 +55,7 @@ const styles = {
   backButton: {
     marginRight: "16px",
   },
-};
-
-function SelectDoctor() {
+};function SelectDoctor() {
   const [open, setModalOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
   const [reason, setReason] = useState("");
@@ -93,40 +91,54 @@ function SelectDoctor() {
     setModalOpen(true);
     getBookedAppointments(_docEmail);
   };
-  
+
   const calculateAvailableSlots = (tmpSelectedDate) => {
     const slotDuration = 30; // in minutes
     const bookedSlots = bookedAppointments.map(
       (appointment) => appointment.slot
     );
-    const dateFormatted = tmpSelectedDate.format().split("T")[0];
+    const dateFormatted = tmpSelectedDate.format("YYYY-MM-DD");
+    const currentTime = dayjs();
+
     const allSlots = generateAllSlots(slotDuration);
     var availableSlots = [];
-    availableSlots = allSlots.filter(slot => {
-      const slotDateTime = `${dateFormatted} ${slot}`;
-      return !bookedSlots.includes(slotDateTime);
-    });
+
+    console.log("currentTime", currentTime);
+    console.log("dateFormatted", dateFormatted);
+    if (currentTime.isSame(dateFormatted, 'day')) {
+      availableSlots = allSlots.filter((slot) => {
+        const slotDateTime = `${dateFormatted} ${slot}`;
+        const slotTime = dayjs(slotDateTime, 'YYYY-MM-DD HH:mm');
+        console.log("slotTime", slotTime);
+        console.log("currentTime", currentTime);
+        return !bookedSlots.includes(slotDateTime) && currentTime.isBefore(slotTime);
+      });
+    } else {
+      availableSlots = allSlots.filter((slot) => {
+        const slotDateTime = `${dateFormatted} ${slot}`;
+        return !bookedSlots.includes(slotDateTime);
+      });
+    }
 
     setAvailableSlots(availableSlots);
   };
 
   const generateAllSlots = (duration) => {
     var allSlots = [];
-    let currentTime = docStartTime;
-    while (currentTime <= docEndTime) {
-      if(currentTime!=="12:30" && currentTime!=="13:00") {
-        allSlots.push(currentTime);
+    let currentTime = dayjs(docStartTime, 'HH:mm'); // Parse the start time
+    const endTime = dayjs(docEndTime, 'HH:mm'); // Parse the end time
+
+    while (currentTime.isBefore(endTime)) {
+      if (
+        !currentTime.isSame(dayjs('12:30', 'HH:mm')) &&
+        !currentTime.isSame(dayjs('13:00', 'HH:mm'))
+      ) {
+        allSlots.push(currentTime.format('HH:mm'));
       }
 
-      const [hours, minutes] = currentTime.split(":");
-      const currentMinutes = parseInt(hours, 10) * 60 + parseInt(minutes, 10);
-      const newMinutes = currentMinutes + duration;
-      const newHours = Math.floor(newMinutes / 60);
-      const formattedHours = newHours < 10 ? `0${newHours}` : `${newHours}`;
-      const formattedMinutes = (newMinutes % 60) < 10 ? `0${newMinutes % 60}` : `${newMinutes % 60}`;
-      
-      currentTime = `${formattedHours}:${formattedMinutes}`;
+      currentTime = currentTime.add(duration, 'minute');
     }
+    console.log("allSlts", allSlots);
     return allSlots;
   };
 
@@ -139,7 +151,7 @@ function SelectDoctor() {
     const getAppointmentsForSelectedDoctor = await axios.get(
       `http://localhost:8081/api/v1/appointment/${_docEmail}`
     );
-    setBookedAppointments(getAppointmentsForSelectedDoctor.data);
+    setBookedAppointments(getAppointmentsForSelectedDoctor.data || []); // add default value for empty case
   };
 
   const handleSlotSelection = (selectedSlot) => {
@@ -159,13 +171,24 @@ function SelectDoctor() {
       reason,
       medicalCenter: center,
     };
-    const out = await axios.post(
-      "http://localhost:8081/api/v1/addAppointment",
-      data
-    );
-    setModalOpen(false);
-    Swal.fire("Appointment Added !");
-    navigate("/userDash");
+
+    try {
+      // Make API call to add appointment
+      const out = await axios.post("http://localhost:8081/api/v1/addAppointment", data);
+
+      // Update booked appointments after successful appointment addition
+      getBookedAppointments(docEmail);
+
+      // Close the modal and show success message
+      setModalOpen(false);
+      Swal.fire("Appointment Added !");
+      navigate("/userDash");
+    } catch (error) {
+      // Handle error
+      console.error("Error adding appointment:", error);
+      // Optionally show an error message to the user
+      Swal.fire("Error adding appointment", "Please try again.", "error");
+    }
   };
 
   const availableSlotStyle = {

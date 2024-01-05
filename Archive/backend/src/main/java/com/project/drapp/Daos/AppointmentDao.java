@@ -17,4 +17,9 @@ public interface AppointmentDao extends CrudRepository<Appointment,String> {
     @Transactional
     @Query(value = "UPDATE appointments SET feedback = ?1 WHERE id = ?2",nativeQuery = true)
     void updateAppointmentFeedback(String feedback,String id);
+
+    @Modifying
+    @Transactional
+    @Query(value = "DELETE from appointments WHERE id = ?1",nativeQuery = true)
+    void deleteAppointment(String id);
 }
