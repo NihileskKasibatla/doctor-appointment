@@ -18,18 +18,17 @@ const Home = () => {
     const { accountType, setAccountType } = useContext(AppContext);
     const [ role, setUserRole ] = useState('');
     const [logo, setLogo] = useState(doctorLogo);
-    const [errorUserName, setErrorUserName] = useState(false);
+    const [errorEmailAddress, setErrorEmailAddress] = useState(false);
     const [errorPassword, setErrorPassword] = useState(false);
 
-    const userNameRef = useRef();
+    const emailAddressRef = useRef();
     const passwordRef = useRef();
 
     const navigate = useNavigate();
 
 
-    const isValidUserName = (inputVal) => {
-        const isValid = /^[A-Za-z]+$/.test(inputVal) || /\S+@\S+\.\S+/.test(inputVal);
-        return isValid;
+    const isValidEmailAddress = (inputVal) => {
+        return /\S+@\S+\.\S+/.test(inputVal);
     };
 
     const isValidPassword = (password) => {
@@ -58,10 +57,10 @@ const Home = () => {
     };
 
     const handleUserNameChange = (event) => {
-        if (!isValidUserName(event.target.value)) {
-            setErrorUserName(true);
+        if (!isValidEmailAddress(event.target.value)) {
+            setErrorEmailAddress(true);
         } else {
-            setErrorUserName(false);
+            setErrorEmailAddress(false);
         }
     };
 
@@ -74,16 +73,16 @@ const Home = () => {
     };
 
     const validateAllFields = () => {
-        const userNameVal = userNameRef.current.value;
+        const emailAddressVal = emailAddressRef.current.value;
         const passwordVal = passwordRef.current.value;
         let validationFail = true;
 
-        console.log({ userNameVal, passwordVal });
+        console.log({ emailAddressVal, passwordVal });
 
-        if (!userNameVal) setErrorUserName(true);
+        if (!emailAddressVal) setErrorEmailAddress(true);
         if (!passwordVal) setErrorPassword(true);
 
-        if (!userNameVal || !passwordVal) {
+        if (!emailAddressVal || !passwordVal) {
             validationFail = true;
         } else validationFail = false;
 
@@ -91,11 +90,11 @@ const Home = () => {
     };
 
     const createAccount = async () => {
-        const userNameVal = userNameRef.current.value;
+        const emailAddressVal = emailAddressRef.current.value;
         const passwordVal = passwordRef.current.value;
 
         const data = {
-            userEmail: userNameVal,
+            userEmail: emailAddressVal,
             userPass: passwordVal,
         };
         const out = await axios.post(
@@ -107,12 +106,12 @@ const Home = () => {
         if (out.data.email || out.data.userEmail) {
             localStorage.setItem("userData", JSON.stringify(out.data));
             if (role === "doctor") {
-                navigate("/doctorDash");
+                navigate("/doctorDashboard");
             } else {
                 navigate("/userDash");
             }
         } else {
-            Swal.fire("Login Failed, Please check your password / email");
+            Swal.fire("Login Failed\nPlease check your email address password combination");
         }
     };
 
@@ -142,22 +141,22 @@ const Home = () => {
                 </Tabs>
 
                 <FormGroup>
-                    {errorUserName && (
-                        <label style={{ color: "red" }} htmlFor="username">
-                            Username is invalid
+                    {errorEmailAddress && (
+                        <label style={{ color: "red" }} htmlFor="emailaddress">
+                            Email Address is invalid
                         </label>
                     )}
-                    {!errorUserName && (
-                        <label type="text" htmlFor="username">
-                            Username
+                    {!errorEmailAddress && (
+                        <label type="text" htmlFor="emailaddress">
+                            Email Address
                         </label>
                     )}
                     <input
                         type="text"
-                        ref={userNameRef}
+                        ref={emailAddressRef}
                         placeholder="Email or Phone"
                         onChange={handleUserNameChange}
-                        id="username"
+                        id="emailaddress"
                     />
                 </FormGroup>
 

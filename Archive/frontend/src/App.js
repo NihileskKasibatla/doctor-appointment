@@ -7,6 +7,7 @@ import LoginOld from "./Login";
 
 import Login from "./Login";
 import Register from "./Register/Register";
+import DoctorDashboard from "./DoctorDashboard/DoctorDashboard";
 
 import RegisterDoctor from "./RegisterDoctor";
 import SelectDoctor from "./SelectDoctor";
@@ -30,13 +31,16 @@ const App = () => {
                         <Route path="/" element={<Home />} />
                         <Route path="/login" element={<Login />} />
                         <Route path="/register" element={<Register />} />
+                        <Route path="/doctorDashboard" element={<DoctorDashboard />} />
+
+
                         <Route path="/registerDoctor" element={<RegisterDoctor />} />
                         <Route path="/loginOld" element={<LoginOld />} />
                         <Route path="/registerOld" element={<RegisterOld />} />
                         <Route path="/registerDoctorOld" element={<RegisterDoctor />} />
                         <Route path="/selectDoctor" element={<SelectDoctor />} />
                         <Route path="/userDash" element={<UserHome />} />
-                        <Route path="/doctorDash" element={<DoctorHome />} />
+                        <Route path="/doctorDashOld" element={<DoctorHome />} />
                         <Route path="/doctorDetails/:id" element={<DoctorDetails />} />
                     </Routes>
                 </BrowserRouter>
