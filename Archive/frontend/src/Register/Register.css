@@ -37,7 +37,7 @@
     margin-top: -2em;
 }
 
-#register-form .MuiFormGroup-root  {
+#register-form .MuiFormGroup-root {
     margin-top: 1.8em;
     font-size: 16px;
 }
@@ -79,8 +79,8 @@
 }
 
 #register-form button.register-btn:disabled {
-    background-color:grey;
-    cursor:unset
+    background-color: grey;
+    cursor: unset;
 }
 
 #register-form button.register-btn:hover:enabled {
@@ -91,7 +91,6 @@
 /* #register-form .available-time .MuiFormControlLabel-label{
 } */
 
-
 label.MuiFormControlLabel-root.MuiFormControlLabel-labelPlacementTop.available-time.css-1hpqosy-MuiFormControlLabel-root {
     display: flex;
     align-items: unset;
@@ -99,14 +98,15 @@ label.MuiFormControlLabel-root.MuiFormControlLabel-labelPlacementTop.available-t
     font-family: unset;
 }
 
-.available-time span.MuiTypography-root.MuiTypography-body1.MuiFormControlLabel-label.css-ahj2mt-MuiTypography-root {
+.available-time
+    span.MuiTypography-root.MuiTypography-body1.MuiFormControlLabel-label.css-ahj2mt-MuiTypography-root {
     font-family: unset;
 }
 
-.available-start-time span.MuiTypography-root.MuiTypography-body1.MuiFormControlLabel-label.css-ahj2mt-MuiTypography-root {
+.available-start-time
+    span.MuiTypography-root.MuiTypography-body1.MuiFormControlLabel-label.css-ahj2mt-MuiTypography-root {
     font-family: unset;
 }
-
 
 label.MuiFormControlLabel-root.MuiFormControlLabel-labelPlacementTop.available-start-time.css-1hpqosy-MuiFormControlLabel-root {
     display: flex;

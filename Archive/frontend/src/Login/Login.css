@@ -27,7 +27,6 @@ form#login-form * {
     border: none;
 }
 
-
 #login-form label {
     display: block;
     margin-top: 30px;
@@ -89,7 +88,10 @@ form#login-form * {
     left: 120px;
 }
 
-#login-form .MuiTabs-root.login-tabs .MuiTabs-scroller.MuiTabs-fixed span.MuiTabs-indicator.css-1aquho2-MuiTabs-indicator {
+#login-form
+    .MuiTabs-root.login-tabs
+    .MuiTabs-scroller.MuiTabs-fixed
+    span.MuiTabs-indicator.css-1aquho2-MuiTabs-indicator {
     background-color: #319997;
 }
 
