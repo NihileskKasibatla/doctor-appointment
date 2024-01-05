@@ -88,7 +88,7 @@ const Home = () => {
         return validationFail;
     };
 
-    const createAccount = async () => {
+    const signIn = async () => {
         const emailAddressVal = emailAddressRef.current.value;
         const passwordVal = passwordRef.current.value;
 
@@ -121,8 +121,7 @@ const Home = () => {
 
         if (isValidationFailed) console.log("Fail");
         else {
-            createAccount();
-            console.log("Success");
+            signIn();
         }
     };
 

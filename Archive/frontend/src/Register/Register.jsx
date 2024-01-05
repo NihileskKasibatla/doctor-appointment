@@ -1,24 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import {
-    Button,
-    Container,
     Avatar,
-    Grid,
-    Link,
     TextField,
     Typography,
+    Checkbox,
+    FormGroup,
     FormControlLabel,
+    Button,
     Snackbar,
     Alert,
 } from "@mui/material";
-import FormGroup from "@mui/material/FormGroup";
-import Checkbox from "@mui/material/Checkbox";
+import Stack from "@mui/system/Stack";
 
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { TimePicker } from "@mui/x-date-pickers/TimePicker";
-import { Box } from "@mui/system";
 import { LockOutlined } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import "./Register.css";
@@ -46,7 +43,7 @@ const Register = () => {
     const [inputType, setInputType] = useState("password");
     const { accountType } = useContext(AppContext);
 
-    const [successMessage, setSuccessMessage] = useState(false);
+    const [showSuccessMessage, setShowSuccessMessage] = useState(false);
     const [showErrorMessage, setShowErrorMessage] = useState(false);
     const navigate = useNavigate();
 
@@ -91,7 +88,6 @@ const Register = () => {
     };
 
     const handleMedicalCenterChange = (event) => {
-        console.log(event.target.value);
         if (!isValidMedicalCenter(event.target.value)) {
             setErrorMedicalCenter(true);
         } else {
@@ -138,7 +134,6 @@ const Register = () => {
 
         if (accountType === 0) {
             //Validations for register doctor
-
             if (!departmentVal) setErrorDepartment(true);
             if (!medicalCenterVal) setErrorMedicalCenter(true);
 
@@ -166,7 +161,6 @@ const Register = () => {
             }
         } else {
             //Validations for register patient
-
             if (!phoneVal) {
                 setErrorPhoneNumber(true);
                 validationFail = true;
@@ -185,40 +179,61 @@ const Register = () => {
         return validationFail;
     };
 
+    const createDoctor = async () => {
+        const userNameVal = userNameRef.current.value;
+        const emailAddressVal = emailAddressRef.current.value;
+        // const phoneVal = phoneRef?.current?.value;
+        const passwordVal = passwordRef.current.value;
+        const departmentVal = departmentRef?.current?.value;
+        const medicalCenterVal = medicalCenterRef?.current?.value;
+
+        const data = {
+            email: emailAddressVal,
+            password: passwordVal,
+            name: userNameVal,
+            department: departmentVal,
+            center: medicalCenterVal,
+            availableStartTime: new Intl.DateTimeFormat("en-US", {
+                hour: "2-digit",
+                minute: "2-digit",
+                hour12: false,
+            }).format(new Date(startTime)),
+            availableEndTime: new Intl.DateTimeFormat("en-US", {
+                hour: "2-digit",
+                minute: "2-digit",
+                hour12: false,
+            }).format(new Date(endTime)),
+        };
+
+        console.log("Sending request with data:", data);
+
+        try {
+            const response = await axios.post("http://localhost:8081/api/v1/createdoctor", data);
+            console.log("Response from server:", response.data);
+
+            // Show success message
+            setShowSuccessMessage(true);
+            setTimeout(() => navigate("/"), 5000);
+        } catch (error) {
+            console.error("Error creating doctor:", error);
+        }
+    };
+
+    const createUser = async () => {};
+
     const handleCreateAccount = () => {
         const isValidationFailed = validateAllFields();
 
         if (isValidationFailed) console.log("Fail");
-        else console.log("Success");
+        else {
+            console.log("Success");
+            if (accountType === 0) createDoctor();
+            else createUser();
+        }
     };
 
-    // const handleRegister = async () => {
-    //   const data = {
-    //     email,
-    //     name,
-    //     department: dept,
-    //     center,
-    //     availableStartTime: new Intl.DateTimeFormat('en-US', { hour: '2-digit', minute: '2-digit', hour12: false }).format(new Date(startTime)),
-    //     availableEndTime: new Intl.DateTimeFormat('en-US', { hour: '2-digit', minute: '2-digit', hour12: false }).format(new Date(endTime)),
-    //     password,
-    //   };
-
-    //   console.log("Sending request with data:", data);
-
-    //   try {
-    //     const response = await axios.post("http://localhost:8081/api/v1/createdoctor", data);
-    //     console.log("Response from server:", response.data);
-
-    //     // Show success message
-    //     setSuccessMessage('Doctor details added successfully');
-    //   } catch (error) {
-    //     console.error("Error creating doctor:", error);
-    //   }
-    //   navigate("/");
-    // };
-
     const handleCloseSuccessMessage = () => {
-        setSuccessMessage(null);
+        setShowSuccessMessage(null);
     };
 
     const showPassword = (e) => {
@@ -230,8 +245,24 @@ const Register = () => {
         }
     };
 
+    const handleClose = (event, reason) => {
+        if (reason === "clickaway") {
+            return;
+        }
+        setShowSuccessMessage(false);
+    };
+
     return (
         <div className={`register-container${accountType === 0 ? ` doctor` : ""}`}>
+            <Stack spacing={2} sx={{ width: "100%" }}>
+                <Snackbar open={showSuccessMessage} autoHideDuration={6000} onClose={handleClose}>
+                    <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
+                        Your account has been successfully created! You will be redirected to home
+                        screen in few seconds!
+                    </Alert>
+                </Snackbar>
+            </Stack>
+
             <div className="register">
                 <form id="register-form">
                     <div className="form-elements">

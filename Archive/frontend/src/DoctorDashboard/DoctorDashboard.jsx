@@ -104,7 +104,7 @@ const DoctorDashboard = () => {
                             gap={2}
                             flexWrap={"wrap"}
                         >
-                            {pastApps.map((app) => (
+                            {upcomingApps.map((app) => (
                                 <AppointmentCard
                                     key={app.id}
                                     center={app.medicalCenter}
