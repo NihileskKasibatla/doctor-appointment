@@ -4,12 +4,17 @@ import Navbar from "react-bootstrap/Navbar";
 import doctorLogo from "../assets/Doctor-Tool.png";
 import { useNavigate } from "react-router-dom";
 import { Logout } from "@mui/icons-material";
-
 import { IconButton, Menu, MenuItem } from "@mui/material";
+
+const removeQuotes = (str) => {
+    return str ? str.replace(/['"]+/g, "") : "";
+};
 
 const Header = () => {
     const navigate = useNavigate();
     const [anchorEl, setAnchorEl] = useState(null);
+    const username = localStorage.getItem("username");
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
 
     const handleLogoutClose = () => {
         setAnchorEl(null);
@@ -38,22 +43,26 @@ const Header = () => {
                         Dr. App
                     </Navbar.Brand>
                     <Navbar.Collapse className="justify-content-end">
-                        <Navbar.Text>Signed in as: Mark Otto</Navbar.Text>
-                        <IconButton
-                            size="large"
-                            edge="end"
-                            color="primary"
-                            onClick={handleLogoutClick}
-                        >
-                            <Logout />
-                        </IconButton>
-                        <Menu
-                            anchorEl={anchorEl}
-                            open={Boolean(anchorEl)}
-                            onClose={handleLogoutClose}
-                        >
-                            <MenuItem onClick={handleLogout}>Logout</MenuItem>
-                        </Menu>
+                        {isLoggedIn && (
+                            <div>
+                                <Navbar.Text>Signed in as: {username}</Navbar.Text>}
+                                <IconButton
+                                    size="large"
+                                    edge="end"
+                                    color="primary"
+                                    onClick={handleLogoutClick}
+                                >
+                                    <Logout />
+                                </IconButton>
+                                <Menu
+                                    anchorEl={anchorEl}
+                                    open={Boolean(anchorEl)}
+                                    onClose={handleLogoutClose}
+                                >
+                                    <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                                </Menu>
+                            </div>
+                        )}
                     </Navbar.Collapse>
                 </Container>
             </Navbar>

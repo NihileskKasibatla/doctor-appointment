@@ -104,6 +104,8 @@ const Home = () => {
         );
         if (out.data.email || out.data.userEmail) {
             localStorage.setItem("userData", JSON.stringify(out.data));
+            localStorage.setItem("username", out?.data?.name);
+            localStorage.setItem("isLoggedIn", true);
             if (role === "doctor") {
                 navigate("/doctorDashboard");
             } else {
