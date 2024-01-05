@@ -1,14 +1,14 @@
-import { useContext, useEffect, useState, useRef } from 'react';
-import { Link } from 'react-router-dom';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import { FormGroup } from '@mui/material';
+import { useContext, useEffect, useState, useRef } from "react";
+import { Link } from "react-router-dom";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import { FormGroup } from "@mui/material";
 
-import doctorLogo from '../assets/Doctor-PNG-1.png';
-import patientLogo from '../assets/patient-2.png';
+import doctorLogo from "../assets/Doctor-PNG-1.png";
+import patientLogo from "../assets/patient-2.png";
 
-import './Login.css';
-import AppContext from '../store/store';
+import "./Login.css";
+import AppContext from "../store/store";
 
 const Home = () => {
     const { accountType, setAccountType } = useContext(AppContext);
@@ -44,7 +44,7 @@ const Home = () => {
     const a11yProps = (index) => {
         return {
             id: `simple-tab-${index}`,
-            'aria-controls': `simple-tabpanel-${index}`,
+            "aria-controls": `simple-tabpanel-${index}`,
         };
     };
 
@@ -84,69 +84,69 @@ const Home = () => {
     const handleSignIn = () => {
         const isValidationFailed = validateAllFields();
 
-        if (isValidationFailed) console.log('Fail');
-        else console.log('Success');
+        if (isValidationFailed) console.log("Fail");
+        else console.log("Success");
     };
 
     return (
-        <div className='login'>
-            <form id='login-form'>
-                <img className='doctor-logo' src={logo} alt='Doctor Logo' />
+        <div className="login">
+            <form id="login-form">
+                <img className="doctor-logo" src={logo} alt="Doctor Logo" />
                 <Tabs
                     value={accountType}
                     onChange={handleChange}
-                    aria-label='secondary tabs example'
-                    className='login-tabs'
-                    variant='fullWidth'
+                    aria-label="secondary tabs example"
+                    className="login-tabs"
+                    variant="fullWidth"
                 >
-                    <Tab label='Doctor' {...a11yProps(0)} />
-                    <Tab label='Patient' {...a11yProps(1)} />
+                    <Tab label="Doctor" {...a11yProps(0)} />
+                    <Tab label="Patient" {...a11yProps(1)} />
                 </Tabs>
 
                 <FormGroup>
                     {errorUserName && (
-                        <label style={{ color: 'red' }} htmlFor='username'>
+                        <label style={{ color: "red" }} htmlFor="username">
                             Username is invalid
                         </label>
                     )}
                     {!errorUserName && (
-                        <label type='text' htmlFor='username'>
+                        <label type="text" htmlFor="username">
                             Username
                         </label>
                     )}
                     <input
-                        type='text'
+                        type="text"
                         ref={userNameRef}
-                        placeholder='Email or Phone'
+                        placeholder="Email or Phone"
                         onChange={handleUserNameChange}
-                        id='username'
+                        id="username"
                     />
                 </FormGroup>
 
                 <FormGroup>
                     {errorPassword && (
-                        <label style={{ color: 'red' }} htmlFor='password'>
+                        <label style={{ color: "red" }} htmlFor="password">
                             Password is invalid
                         </label>
                     )}
                     {!errorPassword && (
-                        <label type='text' htmlFor='password'>
+                        <label type="text" htmlFor="password">
                             Password
                         </label>
                     )}
                     <input
-                        type='password'
+                        type="password"
                         ref={passwordRef}
-                        placeholder='Password'
+                        placeholder="Password"
                         onChange={handlePasswordChange}
-                        id='password'
+                        id="password"
                     />
                 </FormGroup>
 
-                <button type='button' onClick={handleSignIn} className='sign-in-btn'>
-                    Sign In as {accountType === 0 ? 'Doctor' : 'Patient'}
+                <button type="button" onClick={handleSignIn} className="sign-in-btn">
+                    Sign In as {accountType === 0 ? "Doctor" : "Patient"}
                 </button>
-                <Link className='sign-up' to='/register'>
+                <Link className="sign-up" to="/register">
                     {"Don't have an account? Sign Up"}
                 </Link>
             </form>

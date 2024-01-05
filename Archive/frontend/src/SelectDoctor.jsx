@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import {
     Button,
     Box,
@@ -9,69 +9,69 @@ import {
     IconButton,
     TextField,
     Typography,
-} from '@mui/material';
-import { Modal } from '@mui/material';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { ArrowBackIos } from '@mui/icons-material';
-import axios from 'axios';
-import { nanoid } from 'nanoid';
-import Swal from 'sweetalert2';
-import dayjs from 'dayjs';
-import { Rating } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+} from "@mui/material";
+import { Modal } from "@mui/material";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { ArrowBackIos } from "@mui/icons-material";
+import axios from "axios";
+import { nanoid } from "nanoid";
+import Swal from "sweetalert2";
+import dayjs from "dayjs";
+import { Rating } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const styles = {
     modalContent: {
-        position: 'absolute',
-        top: '45%', // Adjust the top position as needed
-        left: '50%',
-        display: 'flex',
-        flexDirection: 'column',
-        transform: 'translate(-50%, -50%)',
+        position: "absolute",
+        top: "45%", // Adjust the top position as needed
+        left: "50%",
+        display: "flex",
+        flexDirection: "column",
+        transform: "translate(-50%, -50%)",
         width: 400,
-        bgcolor: 'background.paper',
-        border: '2px solid #000',
+        bgcolor: "background.paper",
+        border: "2px solid #000",
         boxShadow: 24,
         p: 4,
     },
     doctorCard: {
         width: 275,
-        display: 'flex',
-        flexDirection: 'column',
-        margin: '16px',
+        display: "flex",
+        flexDirection: "column",
+        margin: "16px",
     },
     pageContainer: {
-        backgroundColor: '#f5f5f5',
-        padding: '20px',
+        backgroundColor: "#f5f5f5",
+        padding: "20px",
     },
     headerContainer: {
-        backgroundColor: '#1976D2',
-        color: '#fff',
-        padding: '20px',
-        textAlign: 'center',
+        backgroundColor: "#1976D2",
+        color: "#fff",
+        padding: "20px",
+        textAlign: "center",
     },
     backButton: {
-        marginRight: '16px',
+        marginRight: "16px",
     },
 };
 
 function SelectDoctor() {
     const [open, setModalOpen] = useState(false);
     const [selectedDate, setSelectedDate] = useState(null);
-    const [reason, setReason] = useState('');
-    const [docName, setDocName] = useState('');
-    const [center, setCenter] = useState('');
-    const [docEmail, setDocEmail] = useState('');
-    const [docStartTime, setDocStartTime] = useState('');
-    const [docEndTime, setDocEndTime] = useState('');
+    const [reason, setReason] = useState("");
+    const [docName, setDocName] = useState("");
+    const [center, setCenter] = useState("");
+    const [docEmail, setDocEmail] = useState("");
+    const [docStartTime, setDocStartTime] = useState("");
+    const [docEndTime, setDocEndTime] = useState("");
     const [docs, setDocs] = useState([]);
     const currentDate = dayjs();
     const [availableSlots, setAvailableSlots] = useState([]);
-    const [selectedSlot, setSelectedSlot] = useState('');
+    const [selectedSlot, setSelectedSlot] = useState("");
     const [bookedAppointments, setBookedAppointments] = useState([]);
-    const [selectedSlotNoFormat, setSelectedSlotNoFormat] = useState('');
+    const [selectedSlotNoFormat, setSelectedSlotNoFormat] = useState("");
 
     const navigate = useNavigate();
 
@@ -80,7 +80,7 @@ function SelectDoctor() {
     }, []);
 
     const getAllDoctors = async () => {
-        const res = await axios.get('http://localhost:8081/api/v1/doctors');
+        const res = await axios.get("http://localhost:8081/api/v1/doctors");
         setDocs(res.data);
     };
 
@@ -107,12 +107,12 @@ function SelectDoctor() {
         const selectedDateTime = dayjs(tmpSelectedDate);
 
         let allSlots = generateAllSlots(slotDuration);
-        if (selectedDateTime.isSame(currentDateTime, 'day')) {
-            const currentHourMinute = currentDateTime.format('HH:mm');
+        if (selectedDateTime.isSame(currentDateTime, "day")) {
+            const currentHourMinute = currentDateTime.format("HH:mm");
             allSlots = allSlots.filter((slot) => slot > currentHourMinute);
         }
 
-        const dateFormatted = selectedDateTime.format().split('T')[0];
+        const dateFormatted = selectedDateTime.format().split("T")[0];
         const availableSlots = allSlots.filter((slot) => {
             const slotDateTime = `${dateFormatted} ${slot}`;
             return !bookedSlots.includes(slotDateTime);
@@ -125,11 +125,11 @@ function SelectDoctor() {
         var allSlots = [];
         let currentTime = docStartTime;
         while (currentTime <= docEndTime) {
-            if (currentTime !== '12:30' && currentTime !== '13:00') {
+            if (currentTime !== "12:30" && currentTime !== "13:00") {
                 allSlots.push(currentTime);
             }
 
-            const [hours, minutes] = currentTime.split(':');
+            const [hours, minutes] = currentTime.split(":");
             const currentMinutes = parseInt(hours, 10) * 60 + parseInt(minutes, 10);
             const newMinutes = currentMinutes + duration;
             const newHours = Math.floor(newMinutes / 60);
@@ -156,35 +156,35 @@ function SelectDoctor() {
 
     const handleSlotSelection = (selectedSlot) => {
         setSelectedSlotNoFormat(selectedSlot);
-        setSelectedSlot(`${selectedDate.format().split('T')[0]} ${selectedSlot}`);
+        setSelectedSlot(`${selectedDate.format().split("T")[0]} ${selectedSlot}`);
     };
 
     const handleSubmit = async () => {
-        const userData = JSON.parse(localStorage.getItem('userData'));
+        const userData = JSON.parse(localStorage.getItem("userData"));
         const data = {
             id: nanoid(8),
             userEmail: userData.userEmail,
             doctorName: docName,
-            doctorPhone: '1234567890',
+            doctorPhone: "1234567890",
             doctorEmail: docEmail,
             slot: selectedSlot,
             reason,
             medicalCenter: center,
         };
-        await axios.post('http://localhost:8081/api/v1/addAppointment', data);
+        await axios.post("http://localhost:8081/api/v1/addAppointment", data);
         setModalOpen(false);
-        Swal.fire('Appointment Added !');
-        navigate('/userDash');
+        Swal.fire("Appointment Added !");
+        navigate("/userDash");
     };
 
     const availableSlotStyle = {
         flexContainer: {
-            display: 'flex',
-            flexWrap: 'wrap',
-            gap: '8px',
+            display: "flex",
+            flexWrap: "wrap",
+            gap: "8px",
         },
         slotButton: {
-            minWidth: '100px',
+            minWidth: "100px",
         },
     };
 
@@ -192,18 +192,18 @@ function SelectDoctor() {
         <>
             <Box sx={styles.headerContainer}>
                 <IconButton
-                    aria-label='back'
-                    onClick={() => navigate('/userDash')}
+                    aria-label="back"
+                    onClick={() => navigate("/userDash")}
                     sx={styles.backButton}
                 >
                     <ArrowBackIos />
                 </IconButton>
-                <Typography variant='h4' component='h2' sx={{ color: '#fff' }}>
+                <Typography variant="h4" component="h2" sx={{ color: "#fff" }}>
                     Select Preferred Doctor
                 </Typography>
             </Box>
-            <Container component={'main'} sx={styles.pageContainer}>
-                <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
+            <Container component={"main"} sx={styles.pageContainer}>
+                <Box sx={{ display: "flex", flexWrap: "wrap" }}>
                     {docs.map((doc) => (
                         <DoctorCard
                             key={doc.email}
@@ -229,27 +229,27 @@ function SelectDoctor() {
             <Modal
                 open={open}
                 onClose={() => setModalOpen(false)}
-                aria-labelledby='modal-modal-title'
-                aria-describedby='modal-modal-description'
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
             >
                 <Box sx={styles.modalContent}>
-                    <Typography id='modal-modal-title' variant='h6' component='h2'>
+                    <Typography id="modal-modal-title" variant="h6" component="h2">
                         Enter the Reason for Appointment
                     </Typography>
                     <TextField onChange={(e) => setReason(e.target.value)} />
-                    <Typography id='modal-modal-description' sx={{ mt: 2 }}>
+                    <Typography id="modal-modal-description" sx={{ mt: 2 }}>
                         Select the Appointment Date
                     </Typography>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <DatePicker
-                            label='Select Date'
+                            label="Select Date"
                             value={selectedDate}
                             onChange={(newDate) => handleDateChange(newDate)}
                             minDate={currentDate}
                             renderInput={(params) => <TextField {...params} />}
                         />
                     </LocalizationProvider>
-                    <Typography variant='h6' component='h2'>
+                    <Typography variant="h6" component="h2">
                         Available Slots:
                     </Typography>
                     <div style={availableSlotStyle.flexContainer}>
@@ -258,7 +258,7 @@ function SelectDoctor() {
                                 key={slot}
                                 style={availableSlotStyle.slotButton}
                                 onClick={() => handleSlotSelection(slot)}
-                                variant={selectedSlotNoFormat === slot ? 'contained' : 'outlined'}
+                                variant={selectedSlotNoFormat === slot ? "contained" : "outlined"}
                             >
                                 {slot}
                             </Button>
@@ -276,26 +276,26 @@ function DoctorCard({ onSelect, name, dept, center, startTime, endTime, rating }
         <Box sx={styles.doctorCard}>
             <Card>
                 <CardContent>
-                    <Typography variant='h5' component='div'>
+                    <Typography variant="h5" component="div">
                         {name}
                     </Typography>
-                    <Typography sx={{ fontSize: 14 }} color='text.secondary' gutterBottom>
+                    <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
                         {center}
                     </Typography>
-                    <Typography sx={{ mb: 1.5 }} color='text.secondary'>
+                    <Typography sx={{ mb: 1.5 }} color="text.secondary">
                         {dept}
                     </Typography>
-                    <Typography variant='body2'>Start Time : {startTime}</Typography>
-                    <Typography variant='body2'>End Time : {endTime}</Typography>
+                    <Typography variant="body2">Start Time : {startTime}</Typography>
+                    <Typography variant="body2">End Time : {endTime}</Typography>
                     {rating && (
-                        <Typography variant='body2' sx={{ display: 'flex', alignItems: 'center' }}>
+                        <Typography variant="body2" sx={{ display: "flex", alignItems: "center" }}>
                             Rating:&nbsp;
                             <Rating name={`${name}-rating`} value={rating} readOnly />
                         </Typography>
                     )}
                 </CardContent>
                 <CardActions>
-                    <Button size='small' onClick={() => onSelect()}>
+                    <Button size="small" onClick={() => onSelect()}>
                         Make Appointment
                     </Button>
                 </CardActions>

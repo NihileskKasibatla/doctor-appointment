@@ -1,8 +1,8 @@
-import Login from '../Login/Login';
+import Login from "../Login/Login";
 
 const Home = () => {
     return (
-        <div className='home'>
+        <div className="home">
             <Login />
         </div>
     );

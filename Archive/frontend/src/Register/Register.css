@@ -75,7 +75,7 @@
     border-radius: 5px;
     text-transform: uppercase;
     cursor: pointer;
-    font-family: 'Poppins', sans-serif;
+    font-family: "Poppins", sans-serif;
 }
 
 #register-form button.register-btn:disabled {

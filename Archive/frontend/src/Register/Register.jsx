@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import {
     Button,
     Container,
@@ -11,19 +11,19 @@ import {
     FormControlLabel,
     Snackbar,
     Alert,
-} from '@mui/material';
-import FormGroup from '@mui/material/FormGroup';
-import Checkbox from '@mui/material/Checkbox';
+} from "@mui/material";
+import FormGroup from "@mui/material/FormGroup";
+import Checkbox from "@mui/material/Checkbox";
 
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { TimePicker } from '@mui/x-date-pickers/TimePicker';
-import { Box } from '@mui/system';
-import { LockOutlined } from '@mui/icons-material';
-import { useNavigate } from 'react-router-dom';
-import './Register.css';
-import { useRef, useContext } from 'react';
-import AppContext from '../store/store';
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { TimePicker } from "@mui/x-date-pickers/TimePicker";
+import { Box } from "@mui/system";
+import { LockOutlined } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
+import "./Register.css";
+import { useRef, useContext } from "react";
+import AppContext from "../store/store";
 
 const Register = () => {
     const [startTime, setStartTime] = useState(new Date());
@@ -41,9 +41,9 @@ const Register = () => {
     const phoneRef = useRef();
     const departmentRef = useRef();
     const medicalCenterRef = useRef();
-    const passwordRef = useRef('');
+    const passwordRef = useRef("");
 
-    const [inputType, setInputType] = useState('password');
+    const [inputType, setInputType] = useState("password");
     const { accountType } = useContext(AppContext);
 
     const [successMessage, setSuccessMessage] = useState(false);
@@ -188,8 +188,8 @@ const Register = () => {
     const handleCreateAccount = () => {
         const isValidationFailed = validateAllFields();
 
-        if (isValidationFailed) console.log('Fail');
-        else console.log('Success');
+        if (isValidationFailed) console.log("Fail");
+        else console.log("Success");
     };
 
     // const handleRegister = async () => {
@@ -222,66 +222,66 @@ const Register = () => {
     };
 
     const showPassword = (e) => {
-        const passwordElType = passwordRef?.current?.attributes?.type?.value || '';
-        if (passwordElType === 'password') {
-            setInputType('text');
+        const passwordElType = passwordRef?.current?.attributes?.type?.value || "";
+        if (passwordElType === "password") {
+            setInputType("text");
         } else {
-            setInputType('password');
+            setInputType("password");
         }
     };
 
     return (
-        <div className={`register-container${accountType === 0 ? ` doctor` : ''}`}>
-            <div className='register'>
-                <form id='register-form'>
-                    <div className='form-elements'>
-                        <div className='avatar'>
-                            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+        <div className={`register-container${accountType === 0 ? ` doctor` : ""}`}>
+            <div className="register">
+                <form id="register-form">
+                    <div className="form-elements">
+                        <div className="avatar">
+                            <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
                                 <LockOutlined />
                             </Avatar>
-                            <Typography component='h1' variant='h6'>
-                                Create New {accountType === 0 ? 'Doctor' : 'Patient'} Account
+                            <Typography component="h1" variant="h6">
+                                Create New {accountType === 0 ? "Doctor" : "Patient"} Account
                             </Typography>
                         </div>
 
                         <FormGroup>
                             {errorEmail && (
-                                <label style={{ color: 'red' }} htmlFor='emailaddress'>
+                                <label style={{ color: "red" }} htmlFor="emailaddress">
                                     Email Address is invalid
                                 </label>
                             )}
                             {!errorEmail && (
-                                <label type='text' htmlFor='emailaddress'>
+                                <label type="text" htmlFor="emailaddress">
                                     Email Address
                                 </label>
                             )}
                             <input
-                                type='text'
+                                type="text"
                                 ref={emailAddressRef}
                                 onChange={handleEmailChange}
-                                placeholder='Enter your Email Address'
-                                id='emailaddress'
+                                placeholder="Enter your Email Address"
+                                id="emailaddress"
                                 required
                             />
                         </FormGroup>
 
                         <FormGroup>
                             {errorUserName && (
-                                <label style={{ color: 'red' }} htmlFor='username'>
+                                <label style={{ color: "red" }} htmlFor="username">
                                     Username is invalid
                                 </label>
                             )}
                             {!errorUserName && (
-                                <label type='text' htmlFor='username'>
+                                <label type="text" htmlFor="username">
                                     Username
                                 </label>
                             )}
                             <input
-                                type='text'
+                                type="text"
                                 ref={userNameRef}
                                 onChange={handleUserNameChange}
-                                placeholder='Enter your username. Only alphabets allowed'
-                                id='username'
+                                placeholder="Enter your username. Only alphabets allowed"
+                                id="username"
                                 required
                             />
                         </FormGroup>
@@ -289,19 +289,19 @@ const Register = () => {
                         {accountType === 1 && (
                             <FormGroup>
                                 {errorPhoneNumber && (
-                                    <label style={{ color: 'red' }} htmlFor='phonenumber'>
+                                    <label style={{ color: "red" }} htmlFor="phonenumber">
                                         Phone Number is invalid
                                     </label>
                                 )}
                                 {!errorPhoneNumber && (
-                                    <label htmlFor='phonenumber'>Phone Number</label>
+                                    <label htmlFor="phonenumber">Phone Number</label>
                                 )}
                                 <input
-                                    type='text'
+                                    type="text"
                                     ref={phoneRef}
                                     onChange={handlePhoneNumberChange}
-                                    placeholder='Enter your 10 digit phone number. Only numbers allowed'
-                                    id='phonenumber'
+                                    placeholder="Enter your 10 digit phone number. Only numbers allowed"
+                                    id="phonenumber"
                                     required
                                 />
                             </FormGroup>
@@ -309,12 +309,12 @@ const Register = () => {
 
                         <FormGroup>
                             {errorPassword && (
-                                <label style={{ color: 'red' }} htmlFor='password'>
+                                <label style={{ color: "red" }} htmlFor="password">
                                     Password is invalid
                                 </label>
                             )}
                             {!errorPassword && (
-                                <label type='text' htmlFor='password'>
+                                <label type="text" htmlFor="password">
                                     Password
                                 </label>
                             )}
@@ -322,8 +322,8 @@ const Register = () => {
                                 type={inputType}
                                 onChange={handlePasswordChange}
                                 ref={passwordRef}
-                                placeholder='Please enter your password'
-                                id='password'
+                                placeholder="Please enter your password"
+                                id="password"
                                 required
                             />
                         </FormGroup>
@@ -331,28 +331,28 @@ const Register = () => {
                         <FormGroup>
                             <FormControlLabel
                                 control={<Checkbox onClick={showPassword} />}
-                                label='Show Password'
+                                label="Show Password"
                             />
                         </FormGroup>
 
                         {accountType === 0 && (
                             <FormGroup>
                                 {errorDepartment && (
-                                    <label style={{ color: 'red' }} htmlFor='department'>
+                                    <label style={{ color: "red" }} htmlFor="department">
                                         Department is invalid
                                     </label>
                                 )}
                                 {!errorDepartment && (
-                                    <label type='text' htmlFor='department'>
+                                    <label type="text" htmlFor="department">
                                         Department
                                     </label>
                                 )}
                                 <input
-                                    type='text'
+                                    type="text"
                                     ref={departmentRef}
                                     onChange={handleDepartmentChange}
-                                    placeholder='Please enter your Department'
-                                    id='department'
+                                    placeholder="Please enter your Department"
+                                    id="department"
                                     required
                                 />
                             </FormGroup>
@@ -361,21 +361,21 @@ const Register = () => {
                         {accountType === 0 && (
                             <FormGroup>
                                 {errorMedicalCenter && (
-                                    <label style={{ color: 'red' }} htmlFor='medicalcenter'>
+                                    <label style={{ color: "red" }} htmlFor="medicalcenter">
                                         Medical Center is invalid
                                     </label>
                                 )}
                                 {!errorMedicalCenter && (
-                                    <label type='text' htmlFor='medicalcenter'>
+                                    <label type="text" htmlFor="medicalcenter">
                                         Medical Center
                                     </label>
                                 )}
                                 <input
-                                    type='text'
+                                    type="text"
                                     ref={medicalCenterRef}
                                     onChange={handleMedicalCenterChange}
-                                    placeholder='Please enter your medical center'
-                                    id='medicalcenter'
+                                    placeholder="Please enter your medical center"
+                                    id="medicalcenter"
                                 />
                             </FormGroup>
                         )}
@@ -383,9 +383,9 @@ const Register = () => {
                         {accountType === 0 && (
                             <FormGroup>
                                 <FormControlLabel
-                                    label='Available Start Time'
-                                    labelPlacement='top'
-                                    className='available-start-time'
+                                    label="Available Start Time"
+                                    labelPlacement="top"
+                                    className="available-start-time"
                                     control={
                                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                                             <TimePicker
@@ -403,9 +403,9 @@ const Register = () => {
                         {accountType === 0 && (
                             <FormGroup>
                                 <FormControlLabel
-                                    label='Available End Time'
-                                    labelPlacement='top'
-                                    className='available-time'
+                                    label="Available End Time"
+                                    labelPlacement="top"
+                                    className="available-time"
                                     control={
                                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                                             <TimePicker
@@ -421,14 +421,14 @@ const Register = () => {
                         )}
 
                         {showErrorMessage && (
-                            <label style={{ color: 'red' }}>Please correct your errors</label>
+                            <label style={{ color: "red" }}>Please correct your errors</label>
                         )}
                         <button
-                            type='button'
+                            type="button"
                             onClick={handleCreateAccount}
-                            className='register-btn'
+                            className="register-btn"
                         >
-                            Create New {accountType === 0 ? 'Doctor' : 'Patient'} Account
+                            Create New {accountType === 0 ? "Doctor" : "Patient"} Account
                         </button>
                     </div>
                 </form>
