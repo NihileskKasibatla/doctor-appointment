@@ -51,7 +51,7 @@ const Register = () => {
     const navigate = useNavigate();
 
     const isValidPhoneNumber = (phoneNumber) => {
-        return /^[0-9]{2}$/g.test(phoneNumber);
+        return /^[0-9]{10}$/g.test(phoneNumber);
     };
 
     const isValidEmail = (email) => {
