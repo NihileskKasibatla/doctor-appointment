@@ -26,13 +26,6 @@ import { useRef, useContext } from "react";
 import AppContext from "../store/store";
 
 const Register = () => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [phone, setPhone] = useState("");
-  const [department, setDepartment] = useState("");
-  const [medicalCenter, setMedicalCenter] = useState("");
-
   const [startTime, setStartTime] = useState(new Date());
   const [endTime, setEndTime] = useState(
     new Date(new Date().getTime() + 1 * 60 * 60 * 1000)
@@ -52,12 +45,12 @@ const Register = () => {
   const medicalCenterRef = useRef();
   const passwordRef = useRef("");
 
+  const [inputType, setInputType] = useState("password");
+  const { accountType } = useContext(AppContext);
+
   const [successMessage, setSuccessMessage] = useState(false);
   const [showErrorMessage, setShowErrorMessage] = useState(false);
   const navigate = useNavigate();
-
-  const [inputType, setInputType] = useState("password");
-  const { accountType } = useContext(AppContext);
 
   const isValidPhoneNumber = (phoneNumber) => {
     return /^[0-9]{2}$/g.test(phoneNumber);
@@ -75,21 +68,12 @@ const Register = () => {
     return /(.|\s)*\S(.|\s)*/.test(password);
   };
 
-  const isValidDepartment = (password) => {
-    return /[A-Za-z0-9'\.\-\s\,]/.test(password);
+  const isValidDepartment = (department) => {
+    return /[A-Za-z0-9'\.\-\s\,]/.test(department);
   };
 
-  const isValidMedicalCenter = (password) => {
-    return /[A-Za-z0-9'\.\-\s\,]/.test(password);
-  };
-
-  const handleMedicalCenterChange = (event) => {
-    if (!isValidMedicalCenter(event.target.value)) {
-      setErrorMedicalCenter(true);
-    } else {
-      setErrorMedicalCenter(false);
-    }
-    setDepartment(event.target.value);
+  const isValidMedicalCenter = (medicalCenter) => {
+    return /[A-Za-z0-9'\.\-\s\,]/.test(medicalCenter);
   };
 
   const handleDepartmentChange = (event) => {
@@ -98,7 +82,6 @@ const Register = () => {
     } else {
       setErrorDepartment(false);
     }
-    setMedicalCenter(event.target.value);
   };
 
   const handlePhoneNumberChange = (event) => {
@@ -107,7 +90,15 @@ const Register = () => {
     } else {
       setErrorPhoneNumber(false);
     }
-    setPhone(event.target.value);
+  };
+
+  const handleMedicalCenterChange = (event) => {
+    console.log(event.target.value);
+    if (!isValidMedicalCenter(event.target.value)) {
+      setErrorMedicalCenter(true);
+    } else {
+      setErrorMedicalCenter(false);
+    }
   };
 
   const handleEmailChange = (event) => {
@@ -116,7 +107,6 @@ const Register = () => {
     } else {
       setErrorEmail(false);
     }
-    setEmail(event.target.value);
   };
 
   const handleUserNameChange = (event) => {
@@ -125,7 +115,6 @@ const Register = () => {
     } else {
       setErrorUserName(false);
     }
-    setName(event.target.value);
   };
 
   const handlePasswordChange = (event) => {
@@ -134,7 +123,6 @@ const Register = () => {
     } else {
       setErrorPassword(false);
     }
-    setName(event.target.value);
   };
 
   const validateAllFields = () => {
@@ -154,7 +142,7 @@ const Register = () => {
       //Validations for register doctor
 
       if (!departmentVal) setErrorDepartment(true);
-      if (!medicalCenterVal) setMedicalCenter(true);
+      if (!medicalCenterVal) setErrorMedicalCenter(true);
 
       if (
         !userNameVal ||
@@ -201,13 +189,14 @@ const Register = () => {
         validationFail = false;
       }
     }
-
-    if (validationFail) console.log("Fail");
-    else console.log("Success");
+    return validationFail;
   };
 
   const handleCreateAccount = () => {
-    validateAllFields();
+    const isValidationFailed = validateAllFields();
+
+    if (isValidationFailed) console.log("Fail");
+    else console.log("Success");
   };
 
   // const handleRegister = async () => {
@@ -378,12 +367,12 @@ const Register = () => {
 
             {accountType === 0 && (
               <FormGroup>
-                {errorDepartment && (
+                {errorMedicalCenter && (
                   <label style={{ color: "red" }} htmlFor="medicalcenter">
                     Medical Center is invalid
                   </label>
                 )}
-                {!errorDepartment && (
+                {!errorMedicalCenter && (
                   <label type="text" htmlFor="medicalcenter">
                     Medical Center
                   </label>
@@ -408,7 +397,7 @@ const Register = () => {
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                       <TimePicker
                         value={startTime}
-                        onChange={(newValue) => setEndTime(newValue)}
+                        onChange={(newValue) => setStartTime(newValue)}
                         renderInput={(params) => <TextField {...params} />}
                         ampm={false}
                       />
