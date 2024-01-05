@@ -6,9 +6,9 @@ import { useNavigate } from "react-router-dom";
 import { Logout } from "@mui/icons-material";
 import { IconButton, Menu, MenuItem } from "@mui/material";
 
-const removeQuotes = (str) => {
-    return str ? str.replace(/['"]+/g, "") : "";
-};
+// const removeQuotes = (str) => {
+//     return str ? str.replace(/['"]+/g, "") : "";
+// };
 
 const Header = () => {
     const navigate = useNavigate();
@@ -43,25 +43,25 @@ const Header = () => {
                         Dr. App
                     </Navbar.Brand>
                     <Navbar.Collapse className="justify-content-end">
+                        {isLoggedIn && <Navbar.Text>Signed in as: {username}</Navbar.Text>}
                         {isLoggedIn && (
-                            <div>
-                                <Navbar.Text>Signed in as: {username}</Navbar.Text>}
-                                <IconButton
-                                    size="large"
-                                    edge="end"
-                                    color="primary"
-                                    onClick={handleLogoutClick}
-                                >
-                                    <Logout />
-                                </IconButton>
-                                <Menu
-                                    anchorEl={anchorEl}
-                                    open={Boolean(anchorEl)}
-                                    onClose={handleLogoutClose}
-                                >
-                                    <MenuItem onClick={handleLogout}>Logout</MenuItem>
-                                </Menu>
-                            </div>
+                            <IconButton
+                                size="large"
+                                edge="end"
+                                color="primary"
+                                onClick={handleLogoutClick}
+                            >
+                                <Logout />
+                            </IconButton>
+                        )}
+                        {isLoggedIn && (
+                            <Menu
+                                anchorEl={anchorEl}
+                                open={Boolean(anchorEl)}
+                                onClose={handleLogoutClose}
+                            >
+                                <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                            </Menu>
                         )}
                     </Navbar.Collapse>
                 </Container>

@@ -59,7 +59,6 @@ const DoctorDashboard = () => {
 
     console.log();
 
-
     // Separate upcoming and past appointments
     const currentTime = dayjs();
     const upcomingApps = apps.filter((app) => dayjs(app.slot).isAfter(currentTime));
