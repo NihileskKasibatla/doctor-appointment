@@ -12,6 +12,7 @@ import RegisterDoctor from "./RegisterDoctor";
 import SelectDoctor from "./SelectDoctor";
 import UserHome from "./UserHome";
 import Home from "./Home/Home";
+import Header from "./Header/Header";
 
 import AppContext from "./store/store";
 
@@ -24,6 +25,7 @@ const App = () => {
         <AppContext.Provider value={{ accountType, setAccountType }}>
             <div className="app">
                 <BrowserRouter>
+                    <Header />
                     <Routes>
                         <Route path="/" element={<Home />} />
                         <Route path="/login" element={<Login />} />
