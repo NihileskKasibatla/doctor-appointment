@@ -19,8 +19,9 @@ import {
   TextField,
   Rating,
   Divider,
+  Popover,
 } from "@mui/material";
-import { ArrowBack, CalendarMonth, StarRate } from "@mui/icons-material";
+import { ArrowBack, CalendarMonth, StarRate, Cancel, InfoOutlined } from "@mui/icons-material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -64,6 +65,11 @@ const styles = {
   feedbackIcon: {
     marginRight: 5,
   },
+  infoIcon: {
+    marginLeft: 1,
+    fontSize: 18,
+    cursor: 'pointer',
+  },
 };
 
 function UserHome() {
@@ -73,6 +79,7 @@ function UserHome() {
   const [feedback, setFeedback] = useState("");
   const [rating, setRating] = useState(0);
   const [feedbackDialogOpen, setFeedbackDialogOpen] = useState(false);
+  const [infoPopupOpen, setInfoPopupOpen] = useState(false);
 
   useEffect(() => {
     getData();
@@ -105,14 +112,35 @@ function UserHome() {
     const appointmentTime = dayjs(appointment.slot);
     const currentTime = dayjs();
 
-    // Allow feedback only if the appointment time has passed
     if (currentTime.isAfter(appointmentTime)) {
       setSelectedAppointment(appointment);
       setFeedbackDialogOpen(true);
     } else {
-      // Provide user feedback that they can only give feedback for past appointments
       Swal.fire("You can only give feedback for past appointments.");
     }
+  };
+
+  const handleCancelClick = async (appointment) => {
+    try {
+      await axios.post(
+        `http://localhost:8081/api/v1/cancelAppointment/${appointment.id}`
+      );
+
+      setApps((prevApps) => prevApps.filter((app) => app.id !== appointment.id));
+
+      Swal.fire("Appointment cancelled successfully!");
+    } catch (error) {
+      console.error("Error cancelling appointment:", error);
+      Swal.fire("Failed to cancel appointment. Please try again.");
+    }
+  };
+
+  const handleInfoIconClick = (event) => {
+    setInfoPopupOpen(event.currentTarget);
+  };
+
+  const handleInfoPopupClose = () => {
+    setInfoPopupOpen(null);
   };
 
   const handleFeedbackDialogClose = () => {
@@ -142,13 +170,13 @@ function UserHome() {
     setFeedbackDialogOpen(false);
   };
 
-  // Sort the apps array based on the appointment time
   const sortedApps = apps.sort((a, b) => dayjs(a.slot).valueOf() - dayjs(b.slot).valueOf());
-
-  // Separate upcoming and past appointments
   const currentTime = dayjs();
   const upcomingApps = sortedApps.filter((app) => dayjs(app.slot).isAfter(currentTime));
   const pastApps = sortedApps.filter((app) => dayjs(app.slot).isBefore(currentTime));
+
+  // Helper text or headline message about doctor's lunch and dinner times
+  const lunchTimeMessage = "Please note: The doctor's lunchtime is from 12:00 PM to 1:00 PM, and dinner time is from 7:00 PM to 8:00 PM.";
 
   return (
     <>
@@ -197,7 +225,18 @@ function UserHome() {
         <Box sx={{ width: '48%' }}>
           <Typography variant="h4" sx={styles.pageTitle}>
             Upcoming Appointments
+            {/* Info icon for lunch and dinner time message */}
+            <IconButton
+              size="small"
+              color="primary"
+              aria-label="info"
+              onClick={handleInfoIconClick}
+              sx={styles.infoIcon}
+            >
+              <InfoOutlined />
+            </IconButton>
           </Typography>
+          
           <Box
             display={"flex"}
             flexDirection={"row"}
@@ -213,6 +252,8 @@ function UserHome() {
                 feedback={app.feedback}
                 startTime={dayjs(app.slot).format('DD MMM YYYY HH:mm')}
                 onFeedbackClick={() => handleFeedbackClick(app)}
+                onCancelClick={() => handleCancelClick(app)}
+                isUpcoming={true}
               />
             ))}
           </Box>
@@ -236,12 +277,30 @@ function UserHome() {
                 docPhone={app.doctorPhone}
                 docName={app.doctorName}
                 feedback={app.feedback}
+                onFeedbackClick={() => handleFeedbackClick(app)}
                 startTime={dayjs(app.slot).format('DD MMM YYYY HH:mm')}
               />
             ))}
           </Box>
         </Box>
       </Box>
+
+      {/* Info Popup */}
+      <Popover
+        open={Boolean(infoPopupOpen)}
+        anchorEl={infoPopupOpen}
+        onClose={handleInfoPopupClose}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'left',
+        }}
+      >
+        <Typography sx={{ p: 2 }}>{lunchTimeMessage}</Typography>
+      </Popover>
 
       {/* Feedback Dialog */}
       <Dialog open={feedbackDialogOpen} onClose={handleFeedbackDialogClose}>
@@ -278,16 +337,26 @@ function UserHome() {
   );
 }
 
-function AppointmentCard({ center, startTime, docName, feedback, reason, onFeedbackClick, onCallDoctorClick }) {
+function AppointmentCard({
+  center,
+  startTime,
+  docName,
+  feedback,
+  reason,
+  onFeedbackClick,
+  onCancelClick,
+  isUpcoming,
+}) {
   const isFeedbackGiven = !!feedback;
+
   const handleFeedbackClick = () => {
-    // Disable the feedback button if feedback is already given
     if (!isFeedbackGiven) {
-      onFeedbackClick(); // Call the original onFeedbackClick function
+      onFeedbackClick();
     } else {
       Swal.fire("Feedback is already provided!!");
     }
   };
+
   return (
     <Box sx={styles.appointmentCard}>
       <Card>
@@ -311,6 +380,16 @@ function AppointmentCard({ center, startTime, docName, feedback, reason, onFeedb
           >
             Feedback
           </Button>
+          {isUpcoming && (
+            <Button
+              size="small"
+              onClick={onCancelClick}
+              color="error"
+              startIcon={<Cancel />}
+            >
+              Cancel
+            </Button>
+          )}
         </CardActions>
       </Card>
     </Box>

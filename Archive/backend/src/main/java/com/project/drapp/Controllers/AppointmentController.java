@@ -31,5 +31,12 @@ public class AppointmentController {
         return ResponseEntity.ok("added feedback");
     }
 
+    @RequestMapping(path = "/api/v1/cancelAppointment/{id}",consumes = "*/*", produces = MediaType.APPLICATION_PROBLEM_JSON_VALUE)
+    public ResponseEntity<String> addAppointment (@PathVariable(name = "id") String appId) {
+        dao.deleteAppointment(appId);
+        return ResponseEntity.ok("cancelled");
+    }
+
+
 
 }
