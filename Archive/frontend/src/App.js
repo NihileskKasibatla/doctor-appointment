@@ -8,7 +8,7 @@ import RegisterDoctor from "./pages/RegisterDoctor";
 import SelectDoctor from "./pages/SelectDoctor";
 import UserHome from "./pages/UserHome";
 
-function App() {
+const App = () => {
   return (
     <div className="App">
       <BrowserRouter>
