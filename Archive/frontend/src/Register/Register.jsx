@@ -34,7 +34,9 @@ const Register = () => {
   const [medicalCenter, setMedicalCenter] = useState("");
 
   const [startTime, setStartTime] = useState(new Date());
-  const [endTime, setEndTime] = useState(new Date());
+  const [endTime, setEndTime] = useState(
+    new Date(new Date().getTime() + 1 * 60 * 60 * 1000)
+  );
 
   const [errorEmail, setErrorEmail] = useState(false);
   const [errorUserName, setErrorUserName] = useState(false);
