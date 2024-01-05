@@ -16,7 +16,7 @@ import Swal from "sweetalert2";
 
 const Home = () => {
     const { accountType, setAccountType } = useContext(AppContext);
-    const [ role, setUserRole ] = useState('');
+    const [role, setUserRole] = useState("");
     const [logo, setLogo] = useState(doctorLogo);
     const [errorEmailAddress, setErrorEmailAddress] = useState(false);
     const [errorPassword, setErrorPassword] = useState(false);
@@ -25,7 +25,6 @@ const Home = () => {
     const passwordRef = useRef();
 
     const navigate = useNavigate();
-
 
     const isValidEmailAddress = (inputVal) => {
         return /\S+@\S+\.\S+/.test(inputVal);
@@ -37,7 +36,7 @@ const Home = () => {
 
     useEffect(() => {
         setAccountType(accountType);
-        setUserRole(accountType === 0 ? 'doctor': 'patient')
+        setUserRole(accountType === 0 ? "doctor" : "patient");
     }, [accountType]);
 
     const handleChange = (event, userVal) => {
