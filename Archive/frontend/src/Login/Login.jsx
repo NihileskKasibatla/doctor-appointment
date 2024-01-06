@@ -76,8 +76,6 @@ const Home = () => {
         const passwordVal = passwordRef.current.value;
         let validationFail = true;
 
-        console.log({ emailAddressVal, passwordVal });
-
         if (!emailAddressVal) setErrorEmailAddress(true);
         if (!passwordVal) setErrorPassword(true);
 
@@ -104,12 +102,14 @@ const Home = () => {
         );
         if (out.data.email || out.data.userEmail) {
             localStorage.setItem("userData", JSON.stringify(out.data));
-            localStorage.setItem("username", out?.data?.name);
+            const loggedInUserName = role === "doctor" ? out?.data?.name : out?.data?.userName;
+            localStorage.setItem("username", loggedInUserName);
             localStorage.setItem("isLoggedIn", true);
+            localStorage.setItem("role", role);
             if (role === "doctor") {
                 navigate("/doctorDashboard");
             } else {
-                navigate("/userDash");
+                navigate("/userDashboard");
             }
         } else {
             Swal.fire("Login Failed\nPlease check your email address password combination");

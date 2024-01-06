@@ -7,9 +7,10 @@ import UserHome from "./UserHome";
 
 import Header from "./Header/Header";
 import Home from "./Home/Home";
-import Login from "./Login/Login"
+import Login from "./Login/Login";
 import Register from "./Register/Register";
 import DoctorDashboard from "./DoctorDashboard/DoctorDashboard";
+import UserDashboard from "./UserDashboard/UserDashboard";
 
 import AppContext from "./store/store";
 import { useState } from "react";
@@ -27,6 +28,7 @@ const App = () => {
                         <Route path="/login" element={<Login />} />
                         <Route path="/register" element={<Register />} />
                         <Route path="/doctorDashboard" element={<DoctorDashboard />} />
+                        <Route path="/userDashboard" element={<UserDashboard />} />
 
                         <Route path="/selectDoctor" element={<SelectDoctor />} />
                         <Route path="/userDash" element={<UserHome />} />
