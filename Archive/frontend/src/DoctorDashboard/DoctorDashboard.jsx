@@ -45,10 +45,12 @@ const AppointmentCard = ({ center, startTime, docName, reason, feedback }) => {
 
 const DoctorDashboard = () => {
     const [apps, setApps] = useState([]);
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
     const navigate = useNavigate();
 
     useEffect(() => {
-        getData();
+        if (!isLoggedIn) navigate("/login");
+        else getData();
     }, []);
 
     const getData = async () => {

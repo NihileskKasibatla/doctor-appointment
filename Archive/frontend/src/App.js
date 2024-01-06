@@ -1,22 +1,17 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import DoctorDetails from "./DoctorDetails";
-import DoctorHome from "./DoctorHome";
-import RegisterOld from "./Register";
-import LoginOld from "./Login";
 
-import Login from "./Login";
+import SelectDoctor from "./SelectDoctor";
+import UserHome from "./UserHome";
+
+import Header from "./Header/Header";
+import Home from "./Home/Home";
+import Login from "./Login/Login"
 import Register from "./Register/Register";
 import DoctorDashboard from "./DoctorDashboard/DoctorDashboard";
 
-import RegisterDoctor from "./RegisterDoctor";
-import SelectDoctor from "./SelectDoctor";
-import UserHome from "./UserHome";
-import Home from "./Home/Home";
-import Header from "./Header/Header";
-
 import AppContext from "./store/store";
-
 import { useState } from "react";
 
 const App = () => {
@@ -33,13 +28,8 @@ const App = () => {
                         <Route path="/register" element={<Register />} />
                         <Route path="/doctorDashboard" element={<DoctorDashboard />} />
 
-                        <Route path="/registerDoctor" element={<RegisterDoctor />} />
-                        <Route path="/loginOld" element={<LoginOld />} />
-                        <Route path="/registerOld" element={<RegisterOld />} />
-                        <Route path="/registerDoctorOld" element={<RegisterDoctor />} />
                         <Route path="/selectDoctor" element={<SelectDoctor />} />
                         <Route path="/userDash" element={<UserHome />} />
-                        <Route path="/doctorDashOld" element={<DoctorHome />} />
                         <Route path="/doctorDetails/:id" element={<DoctorDetails />} />
                     </Routes>
                 </BrowserRouter>
