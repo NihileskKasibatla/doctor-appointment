@@ -2,7 +2,6 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import DoctorDetails from "./DoctorDetails";
 
-import SelectDoctor from "./SelectDoctor";
 import UserHome from "./UserHome";
 
 import Header from "./Header/Header";
@@ -11,6 +10,7 @@ import Login from "./Login/Login";
 import Register from "./Register/Register";
 import DoctorDashboard from "./DoctorDashboard/DoctorDashboard";
 import UserDashboard from "./UserDashboard/UserDashboard";
+import SelectDoctor from "./SelectDoctor/SelectDoctor";
 
 import AppContext from "./store/store";
 import { useState } from "react";

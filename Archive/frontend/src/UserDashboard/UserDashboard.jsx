@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./UserDashboard.css";
 import { Typography, Card, CardContent, CardActions, Button } from "@mui/material";
+import Stack from "@mui/system/Stack";
 
 import {
     Dialog,
@@ -10,8 +11,6 @@ import {
     TextField,
     Rating,
 } from "@mui/material";
-
-import Stack from "@mui/system/Stack";
 
 import { Box } from "@mui/system";
 import axios from "axios";
@@ -137,7 +136,6 @@ const UserDashboard = () => {
             if (role === "patient") getData();
             else setPageAccess(false);
         }
-        // getData();
     }, []);
 
     const getData = async () => {
@@ -194,7 +192,7 @@ const UserDashboard = () => {
     };
 
     return (
-        <div className="doctor-dashboard-details">
+        <div className="user-dashboard-details">
             {!pageAccess && (
                 <Box sx={{ backgroundColor: "#f5f5f5", padding: "2em 0em 4em 2em" }}>
                     <Typography
