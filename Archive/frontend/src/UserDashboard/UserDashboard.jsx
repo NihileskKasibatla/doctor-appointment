@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./UserDashboard.css";
-import { Typography, Card, CardContent, CardActions, Button } from "@mui/material";
 import Stack from "@mui/system/Stack";
-
 import {
     Dialog,
     DialogActions,
@@ -11,6 +9,13 @@ import {
     TextField,
     Rating,
     Fab,
+    Popover,
+    Typography,
+    Card,
+    CardContent,
+    CardActions,
+    Button,
+    IconButton,
 } from "@mui/material";
 
 import { Box } from "@mui/system";
@@ -20,7 +25,7 @@ import dayjs from "dayjs";
 import { styled } from "@mui/system";
 import Swal from "sweetalert2";
 
-import { CalendarMonth, StarRate, Cancel } from "@mui/icons-material";
+import { CalendarMonth, StarRate, Cancel, InfoOutlined } from "@mui/icons-material";
 
 const styles = {
     header: {
@@ -144,6 +149,7 @@ const UserDashboard = () => {
     const [pageAccess, setPageAccess] = useState(true);
     const [feedback, setFeedback] = useState("");
     const [rating, setRating] = useState(0);
+    const [infoPopupOpen, setInfoPopupOpen] = useState(false);
 
     useEffect(() => {
         if (!isLoggedIn) navigate("/login");
@@ -170,6 +176,10 @@ const UserDashboard = () => {
     const pastApps = sortedApps
         .filter((app) => dayjs(app.slot).isBefore(currentTime))
         .sort((a, b) => (b.feedback ? 1 : -1));
+
+    // Helper text or headline message about doctor's lunch and dinner times
+    const lunchTimeMessage =
+        "Please note: The doctor's lunchtime is from 12:00 PM to 1:00 PM, and dinner time is from 7:00 PM to 8:00 PM.";
 
     const handleCancelClick = async (appointment) => {
         try {
@@ -205,6 +215,14 @@ const UserDashboard = () => {
         setFeedbackDialogOpen(false);
     };
 
+    const handleInfoPopupClose = () => {
+        setInfoPopupOpen(null);
+    };
+
+    const handleInfoIconClick = (event) => {
+        setInfoPopupOpen(event.currentTarget);
+    };
+
     const submitFeedback = async () => {
         await axios.post("http://localhost:8081/api/v1/updateRating", {
             email: selectedAppointment.doctorEmail,
@@ -221,6 +239,22 @@ const UserDashboard = () => {
 
     return (
         <div className="user-dashboard-details">
+            {/* Info Popup */}
+            <Popover
+                open={Boolean(infoPopupOpen)}
+                anchorEl={infoPopupOpen}
+                onClose={handleInfoPopupClose}
+                anchorOrigin={{
+                    vertical: "bottom",
+                    horizontal: "left",
+                }}
+                transformOrigin={{
+                    vertical: "top",
+                    horizontal: "left",
+                }}
+            >
+                <Typography sx={{ p: 2 }}>{lunchTimeMessage}</Typography>
+            </Popover>
             {!pageAccess && (
                 <Box sx={{ backgroundColor: "#f5f5f5", padding: "2em 0em 4em 2em" }}>
                     <Typography
@@ -283,6 +317,16 @@ const UserDashboard = () => {
                             {/* Upcoming Appointments Section */}
                             <Typography variant="h6" sx={{ marginBottom: "1.7em" }}>
                                 Upcoming Appointments
+                                {/* Info icon for lunch and dinner time message */}
+                                <IconButton
+                                    size="small"
+                                    color="primary"
+                                    aria-label="info"
+                                    onClick={handleInfoIconClick}
+                                    sx={styles.infoIcon}
+                                >
+                                    <InfoOutlined />
+                                </IconButton>
                             </Typography>
                             <Box
                                 display={"flex"}
