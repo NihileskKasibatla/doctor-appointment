@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./DoctorDashboard.css";
-import { Typography, Card, CardContent, CardActions, Button } from "@mui/material";
+import { Typography, Card, CardContent } from "@mui/material";
 
 import Stack from "@mui/system/Stack";
 
@@ -18,29 +18,30 @@ const Item = styled("div")(({ theme }) => {
     };
 });
 
-const AppointmentCard = ({ center, startTime, docName, reason, feedback }) => {
+const AppointmentCard = ({ center, startTime, userEmail, reason, feedback, _isUpComing }) => {
     return (
         <Card sx={{ width: 300 }}>
-            <CardContent>
-                <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                    Center: {center}
-                </Typography>
+            <CardContent sx={{ textTransform: "uppercase" }}>
                 <Typography variant="h6" component="div">
-                    At {startTime}
+                    {startTime}
                 </Typography>
-                <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                    For: {docName}
+                <Typography sx={{ fontSize: 12 }} color="text.secondary" gutterBottom>
+                    Center: <span style={{ color: "#319997", fontSsize: "12px" }}>{center}</span>
                 </Typography>
-                <Typography variant="body2" sx={{}}>
-                    <b>Patient's Feedback: </b> {feedback ? feedback : "-"}
+                <Typography sx={{ mb: 1.5, fontSize: 12 }} color="text.secondary">
+                    Patient:{" "}
+                    <span style={{ color: "#319997", "font-size": "12px" }}>{userEmail}</span>
                 </Typography>
-                <Typography variant="body2">
+                <Typography sx={{ fontSize: 12 }} variant="body2">
+                    Patient's Feedback: {feedback}
+                </Typography>
+                <Typography sx={{ fontSize: 12 }} variant="body2">
                     <b>Reason:</b> {reason}
                 </Typography>
             </CardContent>
-            <CardActions>
+            {/* {<CardActions>
                 <Button size="small">View Details</Button>
-            </CardActions>
+            </CardActions> */}
         </Card>
     );
 };
@@ -66,11 +67,18 @@ const DoctorDashboard = () => {
         setApps(out.data);
     };
 
+    // Sort the apps array based on the appointment time
+    const sortedApps = apps.sort((a, b) => dayjs(a.slot).valueOf() - dayjs(b.slot).valueOf());
+
     // Separate upcoming and past appointments
     const currentTime = dayjs();
-    const upcomingApps = apps.filter((app) => dayjs(app.slot).isAfter(currentTime));
+    const upcomingApps = sortedApps.filter((app) => {
+        return dayjs(app.slot).isAfter(currentTime);
+    });
     const pastApps = apps
-        .filter((app) => dayjs(app.slot).isBefore(currentTime))
+        .filter((app) => {
+            return dayjs(app.slot).isBefore(currentTime);
+        })
         .sort((a, b) => (b.feedback ? 1 : -1));
 
     return (
@@ -135,8 +143,9 @@ const DoctorDashboard = () => {
                                         center={app.medicalCenter}
                                         reason={app.reason}
                                         docPhone={app.doctorPhone}
-                                        docName={app.userEmail}
+                                        userEmail={app.userEmail}
                                         startTime={dayjs(app.slot).format("DD MMM YYYY HH:mm")}
+                                        // isUpComing={true}
                                     />
                                 ))}
                             </Box>
@@ -160,7 +169,7 @@ const DoctorDashboard = () => {
                                         center={app.medicalCenter}
                                         reason={app.reason}
                                         docPhone={app.doctorPhone}
-                                        docName={app.userEmail}
+                                        userEmail={app.userEmail}
                                         feedback={app.feedback}
                                         startTime={dayjs(app.slot).format("DD MMM YYYY HH:mm")}
                                     />

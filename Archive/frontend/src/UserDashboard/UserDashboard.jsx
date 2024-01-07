@@ -20,7 +20,7 @@ import dayjs from "dayjs";
 import { styled } from "@mui/system";
 import Swal from "sweetalert2";
 
-import { CalendarMonth, StarRate } from "@mui/icons-material";
+import { CalendarMonth, StarRate, Cancel } from "@mui/icons-material";
 
 const styles = {
     header: {
@@ -81,7 +81,8 @@ const AppointmentCard = ({
     reason,
     feedback,
     onFeedbackClick,
-    onCallDoctorClick,
+    onCancelClick,
+    isUpcoming,
 }) => {
     const isFeedbackGiven = !!feedback;
     const handleFeedbackClick = () => {
@@ -94,19 +95,19 @@ const AppointmentCard = ({
     };
 
     return (
-        <Card sx={{ minWidth: 300 }}>
-            <CardContent>
-                <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                    Center: {center}
-                </Typography>
+        <Card sx={{ width: 300 }}>
+            <CardContent sx={{ textTransform: "uppercase" }}>
                 <Typography variant="h6" component="div">
-                    At {startTime}
+                    {startTime}
+                </Typography>
+                <Typography sx={{ fontSize: 12 }} color="text.secondary" gutterBottom>
+                    Center: <span style={{ color: "#319997", fontSize: "12px" }}>{center}</span>
                 </Typography>
                 <Typography sx={{ mb: 1.5 }} color="text.secondary"></Typography>
-                <Typography variant="body2">
+                <Typography sx={{ fontSize: 12 }} variant="body2">
                     <b>Doctor:</b> {docName}
                 </Typography>
-                <Typography variant="body2">
+                <Typography sx={{ fontSize: 12 }} variant="body2">
                     <b>Reason:</b> {reason}
                 </Typography>
             </CardContent>
@@ -118,6 +119,16 @@ const AppointmentCard = ({
                 >
                     Feedback
                 </Button>
+                {isUpcoming && (
+                    <Button
+                        size="small"
+                        onClick={onCancelClick}
+                        color="error"
+                        startIcon={<Cancel />}
+                    >
+                        Cancel
+                    </Button>
+                )}
             </CardActions>
         </Card>
     );
@@ -155,10 +166,23 @@ const UserDashboard = () => {
 
     // Separate upcoming and past appointments
     const currentTime = dayjs();
-    const upcomingApps = apps.filter((app) => dayjs(app.slot).isAfter(currentTime));
-    const pastApps = apps
+    const upcomingApps = sortedApps.filter((app) => dayjs(app.slot).isAfter(currentTime));
+    const pastApps = sortedApps
         .filter((app) => dayjs(app.slot).isBefore(currentTime))
         .sort((a, b) => (b.feedback ? 1 : -1));
+
+    const handleCancelClick = async (appointment) => {
+        try {
+            await axios.post(`http://localhost:8081/api/v1/cancelAppointment/${appointment.id}`);
+
+            setApps((prevApps) => prevApps.filter((app) => app.id !== appointment.id));
+
+            Swal.fire("Appointment cancelled successfully!");
+        } catch (error) {
+            console.error("Error cancelling appointment:", error);
+            Swal.fire("Failed to cancel appointment. Please try again.");
+        }
+    };
 
     const handleFeedbackClick = async (appointment) => {
         const appointmentTime = dayjs(appointment.slot);
@@ -228,7 +252,7 @@ const UserDashboard = () => {
                     <Box sx={styles.contentBox}>
                         <Fab
                             variant="extended"
-                            onClick={() => navigate("/selectDoctor")}
+                            onClick={() => navigate("/createAppointment")}
                             sx={{ ...styles.fabButton, marginLeft: "auto" }}
                         >
                             <CalendarMonth sx={{ mr: 1 }} />
@@ -277,6 +301,8 @@ const UserDashboard = () => {
                                         feedback={app.feedback}
                                         startTime={dayjs(app.slot).format("DD MMM YYYY HH:mm")}
                                         onFeedbackClick={() => handleFeedbackClick(app)}
+                                        onCancelClick={() => handleCancelClick(app)}
+                                        isUpcoming={true}
                                     />
                                 ))}
                             </Box>

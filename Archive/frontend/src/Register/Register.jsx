@@ -203,9 +203,6 @@ const Register = () => {
                 hour12: false,
             }).format(new Date(endTime)),
         };
-
-        console.log("Sending request with data:", data);
-
         try {
             const response = await axios.post("http://localhost:8081/api/v1/createdoctor", data);
             console.log("Response from server:", response.data);
@@ -218,14 +215,36 @@ const Register = () => {
         }
     };
 
-    const createUser = async () => {};
+    const createUser = async () => {
+        const userNameVal = userNameRef.current.value;
+        const emailAddressVal = emailAddressRef.current.value;
+        const phoneVal = phoneRef?.current?.value;
+        const passwordVal = passwordRef.current.value;
+        const data = {
+            userEmail: emailAddressVal,
+            userName: userNameVal,
+            userPassword: passwordVal,
+            userAddress: "",
+            userPhoneNumber: phoneVal,
+        };
+
+        try {
+            const response = await axios.post("http://localhost:8081/api/v1/adduser", data);
+            console.log("Response from server:", response.data);
+
+            // Show success message
+            setShowSuccessMessage(true);
+            setTimeout(() => navigate("/"), 5000);
+        } catch (error) {
+            console.error("Error creating doctor:", error);
+        }
+    };
 
     const handleCreateAccount = () => {
         const isValidationFailed = validateAllFields();
 
         if (isValidationFailed) console.log("Fail");
         else {
-            console.log("Success");
             if (accountType === 0) createDoctor();
             else createUser();
         }
@@ -295,7 +314,7 @@ const Register = () => {
                             {errorUserName && (
                                 <label style={{ color: "red" }} htmlFor="username">
                                     Username is invalid.{" "}
-                                    <span style={{ color: "#FAAF00", "font-size": "12px" }}>
+                                    <span style={{ color: "#FAAF00", fontSize: "12px" }}>
                                         Minimum 5 characters required.
                                     </span>
                                 </label>

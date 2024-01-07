@@ -62,7 +62,7 @@ const styles = {
 const DoctorCard = ({ onSelect, name, dept, center, startTime, endTime, rating }) => {
     return (
         <Box sx={styles.doctorCard}>
-            <Card sx={{ minWidth: 300 }}>
+            <Card sx={{ width: 300 }}>
                 <CardContent sx={{ textTransform: "uppercase" }}>
                     <Typography variant="h6" component="div">
                         {name}

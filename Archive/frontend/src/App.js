@@ -1,9 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import DoctorDetails from "./DoctorDetails";
-
-import UserHome from "./UserHome";
-
 import Header from "./Header/Header";
 import Home from "./Home/Home";
 import Login from "./Login/Login";
@@ -29,8 +26,8 @@ const App = () => {
                         <Route path="/register" element={<Register />} />
                         <Route path="/doctorDashboard" element={<DoctorDashboard />} />
                         <Route path="/userDashboard" element={<UserDashboard />} />
+                        <Route path="/createAppointment" element={<SelectDoctor />} />
 
-                        <Route path="/selectDoctor" element={<SelectDoctor />} />
                         <Route path="/doctorDetails/:id" element={<DoctorDetails />} />
                     </Routes>
                 </BrowserRouter>
