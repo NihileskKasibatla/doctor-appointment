@@ -29,8 +29,7 @@ const AppointmentCard = ({ center, startTime, userEmail, reason, feedback, _isUp
                     Center: <span style={{ color: "#319997", fontSsize: "12px" }}>{center}</span>
                 </Typography>
                 <Typography sx={{ mb: 1.5, fontSize: 12 }} color="text.secondary">
-                    Patient:{" "}
-                    <span style={{ color: "#319997", "font-size": "12px" }}>{userEmail}</span>
+                    Patient: <span style={{ color: "#319997", fontSize: "12px" }}>{userEmail}</span>
                 </Typography>
                 <Typography sx={{ fontSize: 12 }} variant="body2">
                     Patient's Feedback: {feedback}
