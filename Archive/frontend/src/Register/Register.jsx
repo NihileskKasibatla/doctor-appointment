@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import {
     Avatar,
@@ -45,6 +45,16 @@ const Register = () => {
     const [showSuccessMessage, setShowSuccessMessage] = useState(false);
     const [showErrorMessage, setShowErrorMessage] = useState(false);
     const navigate = useNavigate();
+
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
+    const loggedInRole = localStorage.getItem("role");
+
+    useEffect(() => {
+        if (isLoggedIn) {
+            if (loggedInRole === "doctor") navigate("/doctorDashboard");
+            else navigate("/userDashboard");
+        }
+    }, [isLoggedIn, loggedInRole]);
 
     const isValidPhoneNumber = (phoneNumber) => {
         return /^[0-9]{10}$/g.test(phoneNumber);

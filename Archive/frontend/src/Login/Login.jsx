@@ -20,6 +20,8 @@ const Home = () => {
     const [logo, setLogo] = useState(doctorLogo);
     const [errorEmailAddress, setErrorEmailAddress] = useState(false);
     const [errorPassword, setErrorPassword] = useState(false);
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
+    const loggedInRole = localStorage.getItem("role");
 
     const emailAddressRef = useRef();
     const passwordRef = useRef();
@@ -35,9 +37,14 @@ const Home = () => {
     };
 
     useEffect(() => {
-        setAccountType(accountType);
-        setUserRole(accountType === 0 ? "doctor" : "patient");
-    }, [accountType]);
+        if (!isLoggedIn) {
+            setAccountType(accountType);
+            setUserRole(accountType === 0 ? "doctor" : "patient");
+        } else {
+            if (loggedInRole === "doctor") navigate("/doctorDashboard");
+            else navigate("/userDashboard");
+        }
+    }, [isLoggedIn, accountType, loggedInRole]);
 
     const handleChange = (event, userVal) => {
         if (userVal === 0) {

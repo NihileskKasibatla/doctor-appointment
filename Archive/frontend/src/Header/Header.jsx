@@ -1,27 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import doctorLogo from "../assets/Doctor-Tool.png";
 import { useNavigate } from "react-router-dom";
-import { Logout } from "@mui/icons-material";
 
-import { IconButton, Menu, MenuItem, Fab, Box, Avatar } from "@mui/material";
+import { Menu, MenuItem, Fab, Box } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
-import ListItemIcon from "@mui/material/ListItemIcon";
-import Divider from "@mui/material/Divider";
-import Typography from "@mui/material/Typography";
 import Tooltip from "@mui/material/Tooltip";
-import PersonAdd from "@mui/icons-material/PersonAdd";
-import Settings from "@mui/icons-material/Settings";
 
 const Header = () => {
-    const navigate = useNavigate();
     const [anchorEl, setAnchorEl] = useState(null);
     const username = localStorage.getItem("username");
     const isLoggedIn = localStorage.getItem("isLoggedIn");
-
-    const open = Boolean(anchorEl);
+    const role = localStorage.getItem("role");
+    const navigate = useNavigate();
 
     const handleLogoutClose = () => {
         setAnchorEl(null);
@@ -36,15 +29,20 @@ const Header = () => {
         navigate("/");
     };
 
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
+    const handleHomePageLogoClick = () => {
+        if (!isLoggedIn) {
+            navigate("/login");
+        } else {
+            if (role === "doctor") navigate("/doctorDashboard");
+            else navigate("/userDashboard");
+        }
     };
 
     return (
         <>
             <Navbar bg="dark" data-bs-theme="dark" sticky="top">
                 <Container>
-                    <Navbar.Brand href="#home">
+                    <Navbar.Brand style={{ cursor: "pointer" }} onClick={handleHomePageLogoClick}>
                         <img
                             alt="Doctor App Header Logo"
                             src={doctorLogo}
