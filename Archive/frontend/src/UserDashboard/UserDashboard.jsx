@@ -20,7 +20,7 @@ import dayjs from "dayjs";
 import { styled } from "@mui/system";
 import Swal from "sweetalert2";
 
-import { ArrowBack, CalendarMonth, StarRate } from "@mui/icons-material";
+import { CalendarMonth, StarRate } from "@mui/icons-material";
 
 const styles = {
     header: {

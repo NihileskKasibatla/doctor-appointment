@@ -231,11 +231,7 @@ const Register = () => {
         }
     };
 
-    const handleCloseSuccessMessage = () => {
-        setShowSuccessMessage(null);
-    };
-
-    const showPassword = (e) => {
+    const showPassword = (_e) => {
         const passwordElType = passwordRef?.current?.attributes?.type?.value || "";
         if (passwordElType === "password") {
             setInputType("text");

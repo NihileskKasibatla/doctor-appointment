@@ -52,11 +52,6 @@
     font-size: 16px;
 }
 
-label .username-span {
-    font-size: 12px;
-    color: "blue";
-}
-
 #register-form input {
     display: block;
     height: 50px;
