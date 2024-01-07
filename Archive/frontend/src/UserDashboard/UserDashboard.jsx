@@ -10,6 +10,7 @@ import {
     DialogTitle,
     TextField,
     Rating,
+    Fab,
 } from "@mui/material";
 
 import { Box } from "@mui/system";
@@ -39,7 +40,10 @@ const styles = {
         display: "flex",
         flexDirection: "row",
         justifyContent: "space-between",
-        marginBottom: "1em",
+        marginBottom: "-2em",
+        marginRight: "1.8em",
+        position: "relative",
+        top: "-4.8em",
     },
     fabButton: {
         backgroundColor: "#3f51b5",
@@ -219,6 +223,21 @@ const UserDashboard = () => {
                     >
                         Your Health Dashboard
                     </Typography>
+
+                    {/* Book New Appointment Section */}
+                    <Box sx={styles.contentBox}>
+                        <Fab
+                            variant="extended"
+                            onClick={() => navigate("/selectDoctor")}
+                            sx={{ ...styles.fabButton, marginLeft: "auto" }}
+                        >
+                            <CalendarMonth sx={{ mr: 1 }} />
+                            Book New Appointment
+                        </Fab>
+                    </Box>
+
+                    {/* Content Section */}
+
                     <Stack
                         divider={
                             <Box

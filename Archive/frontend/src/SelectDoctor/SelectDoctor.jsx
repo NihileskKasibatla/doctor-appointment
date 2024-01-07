@@ -223,7 +223,7 @@ const SelectDoctor = () => {
         await axios.post("http://localhost:8081/api/v1/addAppointment", data);
         setModalOpen(false);
         Swal.fire("Appointment Added !");
-        navigate("/userDash");
+        navigate("/userDashboard");
     };
 
     const availableSlotStyle = {

@@ -7,7 +7,6 @@ import {
     Checkbox,
     FormGroup,
     FormControlLabel,
-    Button,
     Snackbar,
     Alert,
 } from "@mui/material";
@@ -56,7 +55,7 @@ const Register = () => {
     };
 
     const isValidUserName = (userName) => {
-        return /^[A-Za-z]+$/.test(userName);
+        return /^[A-Za-z].{4,}$/.test(userName);
     };
 
     const isValidPassword = (password) => {
@@ -299,7 +298,10 @@ const Register = () => {
                         <FormGroup>
                             {errorUserName && (
                                 <label style={{ color: "red" }} htmlFor="username">
-                                    Username is invalid
+                                    Username is invalid.{" "}
+                                    <span style={{ color: "#FAAF00", "font-size": "12px" }}>
+                                        Minimum 5 characters required.
+                                    </span>
                                 </label>
                             )}
                             {!errorUserName && (

@@ -31,7 +31,6 @@ const App = () => {
                         <Route path="/userDashboard" element={<UserDashboard />} />
 
                         <Route path="/selectDoctor" element={<SelectDoctor />} />
-                        <Route path="/userDash" element={<UserHome />} />
                         <Route path="/doctorDetails/:id" element={<DoctorDetails />} />
                     </Routes>
                 </BrowserRouter>

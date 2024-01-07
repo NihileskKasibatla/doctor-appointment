@@ -174,7 +174,7 @@ function SelectDoctor() {
         await axios.post("http://localhost:8081/api/v1/addAppointment", data);
         setModalOpen(false);
         Swal.fire("Appointment Added !");
-        navigate("/userDash");
+        navigate("/userDashboard");
     };
 
     const availableSlotStyle = {
@@ -193,7 +193,7 @@ function SelectDoctor() {
             <Box sx={styles.headerContainer}>
                 <IconButton
                     aria-label="back"
-                    onClick={() => navigate("/userDash")}
+                    onClick={() => navigate("/userDashboard")}
                     sx={styles.backButton}
                 >
                     <ArrowBackIos />
