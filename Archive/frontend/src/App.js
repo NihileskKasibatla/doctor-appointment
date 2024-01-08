@@ -8,7 +8,7 @@ import Register from "./Register/Register";
 import DoctorDashboard from "./DoctorDashboard/DoctorDashboard";
 import UserDashboard from "./UserDashboard/UserDashboard";
 import SelectDoctor from "./SelectDoctor/SelectDoctor";
-
+import PageNotFound from "./PageNotFound/PageNotFound";
 import AppContext from "./store/store";
 import { useState } from "react";
 
@@ -28,7 +28,7 @@ const App = () => {
                         <Route path="/userDashboard" element={<UserDashboard />} />
                         <Route path="/createAppointment" element={<SelectDoctor />} />
                         <Route path="/doctorDetails/:id" element={<DoctorDetails />} />
-                        {/* <Route path="/*" render={() => <div><p>404 Not Found</p></div>}  /> */}
+                        <Route path="*" element={<PageNotFound />} />
                     </Routes>
                 </BrowserRouter>
             </div>

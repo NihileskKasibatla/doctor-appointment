@@ -33,7 +33,7 @@ const Login = () => {
     };
 
     const isValidPassword = (password) => {
-        return /(.|\s)*\S(.|\s)*/.test(password);
+        return /(.|\s)*\S(.|\s)*/.test(password); //Doesn't allow password to start with only space. It is valid if a space is followed by any character
     };
 
     useEffect(() => {
@@ -101,15 +101,16 @@ const Login = () => {
             userEmail: emailAddressVal,
             userPass: passwordVal,
         };
-        const out = await axios.post(
+        const response = await axios.post(
             role === "doctor"
                 ? "http://localhost:8081/api/v1/logindoctor"
                 : "http://localhost:8081/api/v1/login",
             data,
         );
-        if (out.data.email || out.data.userEmail) {
-            localStorage.setItem("userData", JSON.stringify(out.data));
-            const loggedInUserName = role === "doctor" ? out?.data?.name : out?.data?.userName;
+        if (response.data.email || response.data.userEmail) {
+            localStorage.setItem("userData", JSON.stringify(response.data));
+            const loggedInUserName =
+                role === "doctor" ? response?.data?.name : response?.data?.userName;
             localStorage.setItem("username", loggedInUserName);
             localStorage.setItem("isLoggedIn", true);
             localStorage.setItem("role", role);
@@ -126,7 +127,7 @@ const Login = () => {
     const handleSignIn = () => {
         const isValidationFailed = validateAllFields();
 
-        if (isValidationFailed) console.log("Fail");
+        if (isValidationFailed) console.log("Failed");
         else {
             signIn();
         }
