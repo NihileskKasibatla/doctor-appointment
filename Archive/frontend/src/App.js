@@ -27,8 +27,8 @@ const App = () => {
                         <Route path="/doctorDashboard" element={<DoctorDashboard />} />
                         <Route path="/userDashboard" element={<UserDashboard />} />
                         <Route path="/createAppointment" element={<SelectDoctor />} />
-
                         <Route path="/doctorDetails/:id" element={<DoctorDetails />} />
+                        {/* <Route path="/*" render={() => <div><p>404 Not Found</p></div>}  /> */}
                     </Routes>
                 </BrowserRouter>
             </div>

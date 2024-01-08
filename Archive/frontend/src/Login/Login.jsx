@@ -14,7 +14,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
-const Home = () => {
+const Login = () => {
     const { accountType, setAccountType } = useContext(AppContext);
     const [role, setUserRole] = useState("");
     const [logo, setLogo] = useState(doctorLogo);
@@ -198,4 +198,4 @@ const Home = () => {
     );
 };
 
-export default Home;
+export default Login;
