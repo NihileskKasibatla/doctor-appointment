@@ -173,9 +173,7 @@ const UserDashboard = () => {
     // Separate upcoming and past appointments
     const currentTime = dayjs();
     const upcomingApps = sortedApps.filter((app) => dayjs(app.slot).isAfter(currentTime));
-    const pastApps = sortedApps
-        .filter((app) => dayjs(app.slot).isBefore(currentTime))
-        .sort((a, b) => (b.feedback ? 1 : -1));
+    const pastApps = sortedApps.filter((app) => dayjs(app.slot).isBefore(currentTime));
 
     // Helper text or headline message about doctor's lunch and dinner times
     const lunchTimeMessage =

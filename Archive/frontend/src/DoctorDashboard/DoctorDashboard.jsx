@@ -74,11 +74,9 @@ const DoctorDashboard = () => {
     const upcomingApps = sortedApps.filter((app) => {
         return dayjs(app.slot).isAfter(currentTime);
     });
-    const pastApps = apps
-        .filter((app) => {
-            return dayjs(app.slot).isBefore(currentTime);
-        })
-        .sort((a, b) => (b.feedback ? 1 : -1));
+    const pastApps = apps.filter((app) => {
+        return dayjs(app.slot).isBefore(currentTime);
+    });
 
     return (
         <div className="doctor-dashboard-details">
