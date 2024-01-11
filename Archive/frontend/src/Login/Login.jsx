@@ -40,6 +40,7 @@ const Login = () => {
         if (!isLoggedIn) {
             setAccountType(accountType);
             setUserRole(accountType === 0 ? "doctor" : "patient");
+            localStorage.setItem("role", accountType === 0 ? "doctor" : "patient");
         } else {
             if (loggedInRole === "doctor") navigate("/doctorDashboard");
             else navigate("/userDashboard");

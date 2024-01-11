@@ -65,7 +65,7 @@ const Header = () => {
                     )}
                     <Box sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
                         {isLoggedIn && (
-                            <Tooltip title="Account settings">
+                            <Tooltip title="Logout">
                                 <Fab
                                     size="small"
                                     color="secondary"

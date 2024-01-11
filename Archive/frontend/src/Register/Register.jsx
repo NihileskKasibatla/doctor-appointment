@@ -40,7 +40,7 @@ const Register = () => {
     const passwordRef = useRef("");
 
     const [inputType, setInputType] = useState("password");
-    const { accountType } = useContext(AppContext);
+    const { accountType, setAccountType } = useContext(AppContext);
 
     const [showSuccessMessage, setShowSuccessMessage] = useState(false);
     const [showErrorMessage, setShowErrorMessage] = useState(false);
@@ -50,6 +50,8 @@ const Register = () => {
     const loggedInRole = localStorage.getItem("role");
 
     useEffect(() => {
+        if (loggedInRole === "doctor") setAccountType(0);
+        else setAccountType(1);
         if (isLoggedIn) {
             if (loggedInRole === "doctor") navigate("/doctorDashboard");
             else navigate("/userDashboard");
