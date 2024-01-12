@@ -19,6 +19,23 @@ describe("Register Component", () => {
         cleanup();
     });
 
+    test("Test if user can input values", async () => {
+        // Arrange
+        const { getByTestId, queryByTestId } = render(
+            <AppContext.Provider value={{ accountType: 1, setAccountType }}>
+                <BrowserRouter>
+                    <Register />
+                </BrowserRouter>
+            </AppContext.Provider>,
+        );
+
+        // Act
+        fireEvent.change(getByTestId("phonenumber"), { target: { value: "1234567890" } });
+
+        // Assert
+        expect(queryByTestId("password-error-label")).toBeNull();
+    });
+
     test("Test if invalid phone number displays error message", async () => {
         // Arrange
         const { getByTestId } = render(
