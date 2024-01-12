@@ -40,7 +40,7 @@ const Header = () => {
 
     return (
         <>
-            <Navbar bg="dark" data-bs-theme="dark" sticky="top">
+            <Navbar bg="dark" data-bs-theme="dark">
                 <Container>
                     <Navbar.Brand style={{ cursor: "pointer" }} onClick={handleHomePageLogoClick}>
                         <img
