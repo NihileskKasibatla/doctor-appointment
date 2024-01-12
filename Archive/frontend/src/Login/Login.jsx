@@ -151,12 +151,12 @@ const Login = () => {
 
                 <FormGroup>
                     {errorEmailAddress && (
-                        <label style={{ color: "red" }} htmlFor="emailaddress">
+                        <label id="emailaddress-error-label" style={{ color: "red" }} htmlFor="emailaddress">
                             Email Address is invalid
                         </label>
                     )}
                     {!errorEmailAddress && (
-                        <label type="text" htmlFor="emailaddress">
+                        <label id="emailaddress-label" type="text" htmlFor="emailaddress">
                             Email Address
                         </label>
                     )}
@@ -166,6 +166,7 @@ const Login = () => {
                         placeholder="Email or Phone"
                         onChange={handleUserNameChange}
                         id="emailaddress"
+                        data-testid="emailaddress"
                     />
                 </FormGroup>
 
