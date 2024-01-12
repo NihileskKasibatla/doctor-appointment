@@ -22,4 +22,9 @@ public interface AppointmentDao extends CrudRepository<Appointment,String> {
     @Transactional
     @Query(value = "DELETE from appointments WHERE id = ?1",nativeQuery = true)
     void deleteAppointment(String id);
+
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE appointments SET message = ?1 WHERE id = ?2",nativeQuery = true)
+    void updateMessageToPatient(String message, String id);
 }

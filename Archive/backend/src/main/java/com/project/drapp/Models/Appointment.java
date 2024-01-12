@@ -24,4 +24,6 @@ public class Appointment {
     public String reason;
     public String medicalCenter;
     public String feedback;
+    public String userName;
+    public String message;
 }
