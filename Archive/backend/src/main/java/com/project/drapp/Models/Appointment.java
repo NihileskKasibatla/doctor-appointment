@@ -18,12 +18,9 @@ public class Appointment {
     public String doctorPhone;
     public String doctorName;
     public String doctorEmail;
-    public String startDateTime;
-    public String endDateTime;
     public String slot;
     public String reason;
     public String medicalCenter;
     public String feedback;
-    public String userName;
     public String message;
 }
