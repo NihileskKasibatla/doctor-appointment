@@ -26,6 +26,8 @@ import { styled } from "@mui/system";
 import Swal from "sweetalert2";
 
 import { CalendarMonth, StarRate, Cancel, InfoOutlined } from "@mui/icons-material";
+import MarkChatUnreadIcon from "@mui/icons-material/MarkChatUnread";
+import { blue } from "@mui/material/colors";
 
 const styles = {
     header: {
@@ -88,6 +90,8 @@ const AppointmentCard = ({
     onFeedbackClick,
     onCancelClick,
     isUpcoming,
+    message,
+    onMessageClick,
 }) => {
     const isFeedbackGiven = !!feedback;
     const handleFeedbackClick = () => {
@@ -97,6 +101,10 @@ const AppointmentCard = ({
         } else {
             Swal.fire("Feedback is already provided!!");
         }
+    };
+
+    const openMessage = () => {
+        onMessageClick();
     };
 
     return (
@@ -134,6 +142,12 @@ const AppointmentCard = ({
                         Cancel
                     </Button>
                 )}
+                {message && (
+                    <MarkChatUnreadIcon
+                        sx={{ color: blue[500], cursor: "pointer" }}
+                        onClick={openMessage}
+                    />
+                )}
             </CardActions>
         </Card>
     );
@@ -150,6 +164,8 @@ const UserDashboard = () => {
     const [feedback, setFeedback] = useState("");
     const [rating, setRating] = useState(0);
     const [infoPopupOpen, setInfoPopupOpen] = useState(false);
+    const [messageDialogOpen, setMessageDialogOpen] = useState(false);
+    const [appointmentMessage, setAppointmentMessage] = useState("");
 
     useEffect(() => {
         if (!isLoggedIn) navigate("/login");
@@ -213,6 +229,10 @@ const UserDashboard = () => {
         setFeedbackDialogOpen(false);
     };
 
+    const handleMessageDialogClose = () => {
+        setMessageDialogOpen(false);
+    };
+
     const handleInfoPopupClose = () => {
         setInfoPopupOpen(null);
     };
@@ -233,6 +253,11 @@ const UserDashboard = () => {
         });
 
         setFeedbackDialogOpen(false);
+    };
+
+    const handleMessageClick = (appointment) => {
+        setAppointmentMessage(appointment.message);
+        setMessageDialogOpen(true);
     };
 
     return (
@@ -345,6 +370,8 @@ const UserDashboard = () => {
                                         onFeedbackClick={() => handleFeedbackClick(app)}
                                         onCancelClick={() => handleCancelClick(app)}
                                         isUpcoming={true}
+                                        message={app.message}
+                                        onMessageClick={() => handleMessageClick(app)}
                                     />
                                 ))}
                             </Box>
@@ -408,6 +435,19 @@ const UserDashboard = () => {
                         </Button>
                         <Button onClick={submitFeedback} color="primary">
                             Submit Feedback
+                        </Button>
+                    </DialogActions>
+                </Dialog>
+            )}
+
+            {pageAccess && (
+                <Dialog open={messageDialogOpen} onClose={handleMessageDialogClose}>
+                    <DialogContent>
+                        <h6>{appointmentMessage}</h6>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={handleMessageDialogClose} color="primary">
+                            Close
                         </Button>
                     </DialogActions>
                 </Dialog>

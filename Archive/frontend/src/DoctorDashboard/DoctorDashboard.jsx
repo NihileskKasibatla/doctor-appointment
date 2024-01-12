@@ -1,6 +1,17 @@
 import React, { useState, useEffect } from "react";
 import "./DoctorDashboard.css";
-import { Typography, Card, CardContent } from "@mui/material";
+import {
+    Typography,
+    Card,
+    CardContent,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
+    TextField,
+    Button,
+    CardActions,
+} from "@mui/material";
 
 import Stack from "@mui/system/Stack";
 
@@ -9,6 +20,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 import { styled } from "@mui/system";
+import { Cancel } from "@mui/icons-material";
 
 const Item = styled("div")(({ theme }) => {
     return {
@@ -18,7 +30,16 @@ const Item = styled("div")(({ theme }) => {
     };
 });
 
-const AppointmentCard = ({ center, startTime, userEmail, reason, feedback, _isUpComing }) => {
+const AppointmentCard = ({
+    center,
+    startTime,
+    userEmail,
+    reason,
+    feedback,
+    onSendMessageClick,
+    isUpComing,
+}) => {
+    const handleSendMessage = () => onSendMessageClick();
     return (
         <Card sx={{ width: 300 }}>
             <CardContent sx={{ textTransform: "uppercase" }}>
@@ -38,9 +59,13 @@ const AppointmentCard = ({ center, startTime, userEmail, reason, feedback, _isUp
                     <b>Reason:</b> {reason}
                 </Typography>
             </CardContent>
-            {/* {<CardActions>
-                <Button size="small">View Details</Button>
-            </CardActions> */}
+            {isUpComing && (
+                <CardActions>
+                    <Button size="small" onClick={handleSendMessage}>
+                        Send Message
+                    </Button>
+                </CardActions>
+            )}
         </Card>
     );
 };
@@ -51,6 +76,11 @@ const DoctorDashboard = () => {
     const role = localStorage.getItem("role");
     const [pageAccess, setPageAccess] = useState(true);
     const navigate = useNavigate();
+    const [sendMessageDialogOpen, setSendMessageDialogOpen] = useState(false);
+    const [message, setMessage] = useState("");
+    const [messageTo, setMessageTo] = useState("");
+    const [errorSendMessage, setErrorSendMessage] = useState(false);
+    const [selectedAppointment, setSelectedAppointment] = useState(null);
 
     useEffect(() => {
         if (!isLoggedIn) navigate("/login");
@@ -77,6 +107,48 @@ const DoctorDashboard = () => {
     const pastApps = apps.filter((app) => {
         return dayjs(app.slot).isBefore(currentTime);
     });
+
+    const handleOuterSendMessage = async (appointment) => {
+        setMessageTo(appointment.userEmail);
+        setSendMessageDialogOpen(true);
+        setErrorSendMessage(false);
+        setSelectedAppointment(appointment);
+    };
+
+    const handleSendMessageDialogClose = () => {
+        setSendMessageDialogOpen(false);
+        setSelectedAppointment(null);
+    };
+
+    const saveMessage = async () => {
+        try {
+            await axios.post("http://localhost:8081/api/v1/updateMessage", {
+                id: selectedAppointment.id,
+                message,
+            });
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+    const sendMessageToPatient = async () => {
+        if (message) {
+            setSendMessageDialogOpen(false);
+            setMessage("");
+            await saveMessage();
+        } else {
+            setErrorSendMessage(true);
+        }
+    };
+
+    const handleSendMessageChange = (message) => {
+        setMessage(message);
+        if (message) {
+            setErrorSendMessage(false);
+        } else {
+            setErrorSendMessage(true);
+        }
+    };
 
     return (
         <div className="doctor-dashboard-details">
@@ -142,7 +214,8 @@ const DoctorDashboard = () => {
                                         docPhone={app.doctorPhone}
                                         userEmail={app.userEmail}
                                         startTime={dayjs(app.slot).format("DD MMM YYYY HH:mm")}
-                                        // isUpComing={true}
+                                        onSendMessageClick={() => handleOuterSendMessage(app)}
+                                        isUpComing={true}
                                     />
                                 ))}
                             </Box>
@@ -176,6 +249,37 @@ const DoctorDashboard = () => {
                     </Stack>
                 </Box>
             )}
+
+            <Dialog open={sendMessageDialogOpen} onClose={handleSendMessageDialogClose}>
+                <DialogTitle className="send-message-title">Message to {messageTo}</DialogTitle>
+                <DialogContent>
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        id="feedback"
+                        label="Message to Patient"
+                        type="text"
+                        fullWidth
+                        multiline
+                        rows={4}
+                        value={message}
+                        onChange={(e) => handleSendMessageChange(e.target.value)}
+                    />
+                    {errorSendMessage && (
+                        <DialogTitle style={{ color: "red" }}>
+                            Message to patient cannot be empty
+                        </DialogTitle>
+                    )}
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleSendMessageDialogClose} color="primary">
+                        Cancel
+                    </Button>
+                    <Button onClick={sendMessageToPatient} color="primary">
+                        Send Message
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </div>
     );
 };
