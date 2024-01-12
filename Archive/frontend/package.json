@@ -53,13 +53,13 @@
         ]
     },
     "devDependencies": {
+        "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
         "@babel/plugin-transform-modules-commonjs": "^7.23.3",
         "@babel/plugin-transform-react-jsx": "^7.23.4",
         "@babel/preset-env": "^7.23.8",
         "@babel/preset-react": "^7.23.3",
         "@testing-library/react": "^14.1.2",
         "babel-jest": "^29.7.0",
-        "identity-obj-proxy": "^3.0.0",
         "jest": "^27.5.1",
         "jquery": "^3.7.1",
         "prettier": "^3.1.1",

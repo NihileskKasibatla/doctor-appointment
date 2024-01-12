@@ -127,11 +127,7 @@ const Login = () => {
 
     const handleSignIn = () => {
         const isValidationFailed = validateAllFields();
-
-        if (isValidationFailed) console.log("Failed");
-        else {
-            signIn();
-        }
+        if (!isValidationFailed) signIn();
     };
 
     return (
@@ -151,12 +147,22 @@ const Login = () => {
 
                 <FormGroup>
                     {errorEmailAddress && (
-                        <label id="emailaddress-error-label" style={{ color: "red" }} htmlFor="emailaddress">
+                        <label
+                            id="emailaddress-error-label"
+                            data-testid="emailaddress-error-label"
+                            style={{ color: "red" }}
+                            htmlFor="emailaddress"
+                        >
                             Email Address is invalid
                         </label>
                     )}
                     {!errorEmailAddress && (
-                        <label id="emailaddress-label" type="text" htmlFor="emailaddress">
+                        <label
+                            id="emailaddress-label"
+                            data-testid="emailaddress-label"
+                            type="text"
+                            htmlFor="emailaddress"
+                        >
                             Email Address
                         </label>
                     )}
@@ -189,8 +195,12 @@ const Login = () => {
                         id="password"
                     />
                 </FormGroup>
-
-                <button type="button" onClick={handleSignIn} className="sign-in-btn">
+                <button
+                    type="button"
+                    onClick={handleSignIn}
+                    className="sign-in-btn"
+                    data-testid="signIn"
+                >
                     Sign In as {accountType === 0 ? "Doctor" : "Patient"}
                 </button>
                 <Link className="sign-up" to="/register">

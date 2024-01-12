@@ -255,8 +255,7 @@ const Register = () => {
     const handleCreateAccount = () => {
         const isValidationFailed = validateAllFields();
 
-        if (isValidationFailed) console.log("Fail");
-        else {
+        if (!isValidationFailed) {
             if (accountType === 0) createDoctor();
             else createUser();
         }
@@ -349,7 +348,11 @@ const Register = () => {
                         {accountType === 1 && (
                             <FormGroup>
                                 {errorPhoneNumber && (
-                                    <label style={{ color: "red" }} htmlFor="phonenumber">
+                                    <label
+                                        style={{ color: "red" }}
+                                        data-testid="phonenumber-error-label"
+                                        htmlFor="phonenumber"
+                                    >
                                         Phone Number is invalid
                                     </label>
                                 )}
@@ -362,6 +365,7 @@ const Register = () => {
                                     onChange={handlePhoneNumberChange}
                                     placeholder="Enter your 10 digit phone number. Only numbers allowed"
                                     id="phonenumber"
+                                    data-testid="phonenumber"
                                     required
                                 />
                             </FormGroup>
@@ -487,6 +491,7 @@ const Register = () => {
                             type="button"
                             onClick={handleCreateAccount}
                             className="register-btn"
+                            data-testid="registerBtn"
                         >
                             Create New {accountType === 0 ? "Doctor" : "Patient"} Account
                         </button>

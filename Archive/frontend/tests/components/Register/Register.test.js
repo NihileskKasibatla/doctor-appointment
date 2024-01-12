@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { expect, jest, test } from "@jest/globals";
-import Login from "../../../src/Login/Login";
+import Register from "../../../src/Register/Register";
 import * as router from "react-router";
 import { cleanup, fireEvent, getByTestId, render } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
@@ -9,7 +9,7 @@ import AppContext from "../../../src/store/store";
 const setAccountType = jest.fn();
 const navigate = jest.fn();
 
-describe("Login Component", () => {
+describe("Register Component", () => {
     beforeEach(() => {
         jest.spyOn(router, "useNavigate").mockImplementation(() => navigate);
     });
@@ -19,40 +19,40 @@ describe("Login Component", () => {
         cleanup();
     });
 
-    test("Test if invalid email address displays error message", async () => {
+    test("Test if invalid phone number displays error message", async () => {
         // Arrange
         const { getByTestId } = render(
-            <AppContext.Provider value={{ accountType: 0, setAccountType }}>
+            <AppContext.Provider value={{ accountType: 1, setAccountType }}>
                 <BrowserRouter>
-                    <Login />
+                    <Register />
                 </BrowserRouter>
             </AppContext.Provider>,
         );
 
         // Act
-        fireEvent.change(getByTestId("emailaddress"), { target: { value: "n@gmail" } });
-        fireEvent.click(getByTestId("signIn"));
+        fireEvent.change(getByTestId("phonenumber"), { target: { value: "846589" } });
+        fireEvent.click(getByTestId("registerBtn"));
 
         // Assert
-        expect(getByTestId("emailaddress-error-label")).toBeTruthy();
+        expect(getByTestId("phonenumber-error-label")).toBeTruthy();
     });
 
-    test("Test no error message is displayed if email address is valid", async () => {
+    test("Test no error message is displayed if phone number is valid", async () => {
         // Arrange
         const { getByTestId, queryByTestId } = render(
-            <AppContext.Provider value={{ accountType: 0, setAccountType }}>
+            <AppContext.Provider value={{ accountType: 1, setAccountType }}>
                 <BrowserRouter>
-                    <Login />
+                    <Register />
                 </BrowserRouter>
             </AppContext.Provider>,
         );
 
         // Act
-        fireEvent.change(getByTestId("emailaddress"), { target: { value: "n@gmail.com" } });
-        fireEvent.click(getByTestId("signIn"));
+        fireEvent.change(getByTestId("phonenumber"), { target: { value: "1234567890" } });
+        fireEvent.click(getByTestId("registerBtn"));
 
         // Assert
-        const element = queryByTestId("emailaddress-error-label");
+        const element = queryByTestId("phonenumber-error-label");
         expect(element).toBeNull();
     });
 });
