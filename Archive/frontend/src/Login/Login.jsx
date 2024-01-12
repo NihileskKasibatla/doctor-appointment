@@ -178,7 +178,11 @@ const Login = () => {
 
                 <FormGroup>
                     {errorPassword && (
-                        <label style={{ color: "red" }} htmlFor="password">
+                        <label
+                            style={{ color: "red" }}
+                            data-testid="password-error-label"
+                            htmlFor="password"
+                        >
                             Password is invalid
                         </label>
                     )}
@@ -193,6 +197,7 @@ const Login = () => {
                         placeholder="Password"
                         onChange={handlePasswordChange}
                         id="password"
+                        data-testid="password"
                     />
                 </FormGroup>
                 <button

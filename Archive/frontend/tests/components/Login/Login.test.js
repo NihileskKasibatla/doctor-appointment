@@ -19,6 +19,25 @@ describe("Login Component", () => {
         cleanup();
     });
 
+    test("Test if user can input values", async () => {
+        // Arrange
+        const { getByTestId, queryByTestId } = render(
+            <AppContext.Provider value={{ accountType: 0, setAccountType }}>
+                <BrowserRouter>
+                    <Login />
+                </BrowserRouter>
+            </AppContext.Provider>,
+        );
+
+        // Act
+        fireEvent.change(getByTestId("emailaddress"), { target: { value: "abcd@gmail.com" } });
+        fireEvent.change(getByTestId("password"), { target: { value: "abcd" } });
+
+        // Assert
+        expect(queryByTestId("emailaddress-error-label")).toBeNull();
+        expect(queryByTestId("password-error-label")).toBeNull();
+    });
+
     test("Test if invalid email address displays error message", async () => {
         // Arrange
         const { getByTestId } = render(
@@ -52,7 +71,6 @@ describe("Login Component", () => {
         fireEvent.click(getByTestId("signIn"));
 
         // Assert
-        const element = queryByTestId("emailaddress-error-label");
-        expect(element).toBeNull();
+        expect(queryByTestId("emailaddress-error-label")).toBeNull();
     });
 });
